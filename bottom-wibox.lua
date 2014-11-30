@@ -10,7 +10,8 @@ local vicious = require("vicious")
 
 -- {{{ Wibox
 -- Define variables
-local highlight = "#3988ff"
+--local highlight = "#3988ff"
+local highlight = "#333333"
 local con = "<span color='" .. highlight .. "'>" -- switch highlight color on
 local con_gr = "<span color='#83ff73'>" -- switch green color on
 local con_ye = "<span color='#ffff33'>" -- switch yellow color on

@@ -1,3 +1,4 @@
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -9,6 +10,8 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
+naughty.config.defaults.font             = beautiful.font or "Verdana 13"
+naughty.config.defaults.position         = "top_right"
 local menubar = require("menubar")
 -- Vicious
 local vicious = require("vicious")
@@ -49,10 +52,14 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
-beautiful.init("~/.config/awesome/ghost-theme.lua")
+--beautiful.init("~/.config/awesome/ghost-theme.lua")
+beautiful.init("~/.config/awesome/themes/quiet-power-theme.lua")
 -- App folders define where the menubar (strg+p) searches for applications
 app_folders = {"/usr/share/applications/", "~/.local/share/applications/"}
 
+
+-- start composition manager
+--awful.util.spawn_with_shell("xcompmgr -cF &")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "xterm"
@@ -256,11 +263,11 @@ for s = 1, screen.count() do
                        local color
                        if state ~= "−" then
                           color = "3988ff"
-                       elseif bat > 70 then
+                       elseif bat > 60 then
                           color = "83ff73"
-                       elseif bat > 50 then
+                       elseif bat > 40 then
                           color = "ffff33"
-                       elseif bat > 30 then
+                       elseif bat > 20 then
                           color = "ff7633"
                        else
                           color = "ff0000"
@@ -379,7 +386,10 @@ globalkeys = awful.util.table.join(
                                  awful.util.getdir("cache") .. "/history_eval")
    end),
    -- Menubar
-   awful.key({ modkey }, "p", function() menubar.show() end)
+   awful.key({ modkey }, "p", function() menubar.show() end),
+
+   -- bind PrintScrn to capture a screen
+   awful.key({ modkey }, "Print", function () awful.util.spawn("capscr",false) end)
 )
 
 clientkeys = awful.util.table.join(
@@ -509,7 +519,7 @@ end
 function nexttiledc(client)
    client = awful.client.next(1,client)
    while awful.client.floating.get(client) do
-      note ("got a floater")
+      note ("nexttiledc: got a floater")
       client = awful.client.next(1,client)
    end
    return client
@@ -519,7 +529,7 @@ end
 -- If the client is floating, the next non floating client is returned.
 function tiledc(client)
    while awful.client.floating.get(client) do
-      --note ("got a floater")
+      note ("tiledc: got a floater")
       client = awful.client.next(1,client)
    end
    return client
@@ -548,9 +558,9 @@ function manageclient(c, startup)
       end
    end
 
-
-   if not startup then
-      ---[[ Client Spawn Mage: spawn terminal where current focus lies and push down the rest.
+   --[[
+   if not startup and tiledc(client.focus) then -- @2: don't run if there are no windows on the current screen
+      Client Spawn Mage: spawn terminal where current focus lies and push down the rest.
       awful.client.focus.history.previous() -- reset focus to the client that was focused when spawning the new client
       local focusedc = tiledc(client.focus)
 
@@ -573,7 +583,7 @@ function manageclient(c, startup)
       --local nc = awful.client.next(1,focusedc)
       local nc = nexttiledc(focusedc) 
       
-      while column == awful.client.idx(nc)['col'] and cnt < 15 do
+      while column == awful.client.idx(nc)['col'] and cnt < 100 do
          cnt = cnt + 1
          col[cnt] = awful.client.idx(nc)['col'] -- for debug
          idx[cnt] = awful.client.idx(nc)['idx'] -- for debug
@@ -606,8 +616,8 @@ function manageclient(c, startup)
                           "\ncnt: " .. cnt ..
                           "\ntsize: " .. tsize(awful.client.visible(current_screen))
       )
-      --]]
    end
+   --]]
 
    -- Enable sloppy focus ( = switch focus with mouse without click )
    c:connect_signal("mouse::enter", function(c)

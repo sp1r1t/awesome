@@ -25,8 +25,10 @@ table5={
    -- ["z"]={"xterm -name mocpTerm -e mocp","mocpTerm", "instance"} 
    ["i"]={"luakit", "luakit", "class"},
    ["c"]={"chromium", "Chromium", "class"},
-   ["o"]={"emacs", "Emacs", "class"},
-   ["Shift-o"]={"xterm -title emacsTerm -e emacs -nw", "emacsTerm", "name"},
-   ["Control-o"]={"sudo xterm -title emacsTerm -e emacs -nw", "emacsTerm", "name"},
+   ["o"]={"emacsclient -c", "Emacs", "class"},
+   ["Shift-o"]={"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
+   ["Control-o"]={"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
    ["g"]={"gimp", "gimp", "class"},
+   ["y"]={"evince", "Evince", "class"},
+   ["s"]={"xterm -title Sup -e sup", "Sup", "name"}
 }
