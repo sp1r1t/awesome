@@ -1,26 +1,26 @@
 ---------------------------
--- Default awesome theme --
+--    Easy Rise Theme    --
 ---------------------------
 
 theme = {}
 
 theme.font          = "sans mono 10"
 
-theme.bg_normal     = "#222222"
+theme.bg_normal     = "#dddddd"
 --theme.bg_focus      = "#535d6c"
-theme.bg_focus      = "#6b3773"
-theme.bg_urgent     = "#ff0000"
+theme.bg_focus      = "#030E29" --AD9EE8"
+theme.bg_urgent     = "#E04F4F"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#999999"
-theme.fg_focus      = "#dddddd"
+theme.fg_normal     = "#777777"
+theme.fg_focus      = "#222222"
 theme.fg_urgent     = "#dddddd"
 theme.fg_minimize   = "#dddddd"
 
-theme.border_width  = 1
+theme.border_width  = 2
 theme.border_normal = "#333333"
-theme.border_focus  = "#b75cd0"
+theme.border_focus  = "#50DE50"--0FBA0F"
 theme.border_marked = "#91231c"
 
 -- Status colors (cpu, mem, net use)
@@ -44,6 +44,7 @@ color_limit_ = "ff0000"
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
+--theme.tasklist_bg_focus = "#ff0000"
 
 -- Display the taglist squares
 theme.taglist_squares_sel   = "/usr/share/awesome/themes/default/taglist/squarefw.png"
@@ -85,7 +86,10 @@ theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/def
 theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = "~/.walls/avatar_appa.jpg"
+--theme.wallpaper = "/usr/share/awesome/themes/default/background.png"
+--theme.wallpaper = "/home/jinn/medien/pix/walls/1432698902716.jpg"
+--theme.wallpaper = "/home/jinn/medien/pix/walls/1432452362423.jpg"
+theme.wallpaper = "/home/jinn/medien/pix/walls/1432686359104.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"

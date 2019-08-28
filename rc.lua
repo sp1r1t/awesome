@@ -15,6 +15,9 @@ naughty.config.defaults.position         = "top_right"
 local menubar = require("menubar")
 -- Vicious
 local vicious = require("vicious")
+-- Filehandle
+--local filehandle = require("filehandle")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -34,7 +37,7 @@ do
                              in_error = true
 
                              naughty.notify({ preset = naughty.config.presets.critical,
-                                              title = "Oops, an error happened!",
+                                              title = "Oops, an error happened in rc.lua!",
                                               text = err })
                              in_error = false
    end)
@@ -43,7 +46,7 @@ end
 
 
 -- {{ Helper function definitions
-function col (text, color) 
+function col (text, color)
    return "<span color='#" .. color .. "'>" .. text .. "</span>"
 end
 -- }}
@@ -52,8 +55,9 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
---beautiful.init("~/.config/awesome/ghost-theme.lua")
-beautiful.init("~/.config/awesome/themes/quiet-power-theme.lua")
+--beautiful.init("~/.config/awesome/themes/easy-rise-theme.lua")
+--beautiful.init("~/.config/awesome/themes/done-and-there.lua")
+beautiful.init("~/.config/awesome/themes/ghost-theme.lua")
 -- App folders define where the menubar (strg+p) searches for applications
 app_folders = {"/usr/share/applications/", "~/.local/share/applications/"}
 
@@ -109,7 +113,7 @@ tags = {}
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
    -- orig: tags[s] = awful.tag.new({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
-   tags[s] = awful.tag.new({ "`", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "-", "=" }, s, layouts[1])
+   tags[s] = awful.tag.new({ "`", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "-", "=", "<-" }, s, layouts[1])
 end
 -- }}}
 
@@ -211,18 +215,18 @@ for s = 1, screen.count() do
 
    -- Create a vicious mem usage widget
    memwidget = wibox.widget.textbox()
-   vicious.register(memwidget, vicious.widgets.mem, 
+      vicious.register(memwidget, vicious.widgets.mem,
                     function (memwidget, args)
                        local output = "M: "
                        local m = args[1]
                        if m > 90 then
-                          output = output .. "<span color='#ff0000'>" .. m .. "</span>"
+                          output = output .. "<span color='" .. color_limit .. "'>" .. m .. "</span>"
                        elseif m > 50 then
-                          output = output .. "<span color='#ff7633'>" .. m .. "</span>"
+                          output = output .. "<span color='" .. color_run .. "'>" .. m .. "</span>"
                        elseif m > 30 then
-                          output = output .. "<span color='#ffff33'>" .. m .. "</span>"
+                          output = output .. "<span color='" .. color_walk .. "'>" .. m .. "</span>"
                        else
-                          output = output .. "<span color='#83ff73'>" .. m .. "</span>"
+                          output = output .. "<span color='" .. color_relax .. "'>" .. m .. "</span>"
                        end
                        output = output .. "%  "
                        return output
@@ -231,20 +235,20 @@ for s = 1, screen.count() do
 
    -- Create a vicious cpu usage widget
    cpuwidget = wibox.widget.textbox()
-   vicious.register(cpuwidget, vicious.widgets.cpu, 
+   vicious.register(cpuwidget, vicious.widgets.cpu,
                     function (cpuwidget, args)
                        local output = "C: "
                        for i, c in pairs(args) do
                           if i == 1 then
                           elseif c > 90 then
-                             output = output .. "<span color='#ff0000'>" .. c .. "</span> "
+                             output = output .. "<span color='".. color_limit .. "'>" .. c .. "</span> "
                           elseif c > 50 then
-                             output = output .. "<span color='#ff7633'>" .. c .. "</span> "
+                             output = output .. "<span color='" .. color_run .. "'>" .. c .. "</span> "
                           elseif c > 30 then
-                             output = output .. "<span color='#ffff33'>" .. c .. "</span> "
+                             output = output .. "<span color='" .. color_walk .. "'>" .. c .. "</span> "
                           else
-                             output = output .. "<span color='#83ff73'>" .. c .. "</span> "
-                             
+                             output = output .. "<span color='" .. color_relax .. "'>" .. c .. "</span> "
+
                           end
                        end
                        output = output .. "  "
@@ -254,7 +258,7 @@ for s = 1, screen.count() do
 
    -- Create a vicous battery widget
    batwidget = wibox.widget.textbox()
-   vicious.register(batwidget, vicious.widgets.bat, 
+   vicious.register(batwidget, vicious.widgets.bat,
                     function (batwidget, args)
                        local state = args[1]
                        local bat = args[2]
@@ -262,17 +266,17 @@ for s = 1, screen.count() do
                        local output = "B: " .. state .. ", "
                        local color
                        if state ~= "−" then
-                          color = "3988ff"
+                         color = "3988ff"
                        elseif bat > 60 then
-                          color = "83ff73"
+                          color = color_relax_
                        elseif bat > 40 then
-                          color = "ffff33"
+                          color = color_walk_
                        elseif bat > 20 then
-                          color = "ff7633"
+                          color = color_run_
                        else
-                          color = "ff0000"
+                          color = color_limit_
                        end
-                       output = output .. col(bat, color) .. ", " .. 
+                       output = output .. col(bat, color) .. ", " ..
                           col(time, color)
 
                        return output
@@ -360,7 +364,7 @@ globalkeys = awful.util.table.join(
    --        end),
 
    -- Standard program
-   awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+   awful.key({ modkey, "Shift"   }, "Return", function () awful.util.spawn(terminal) end),
    awful.key({ modkey, "Control" }, "r", awesome.restart),
    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -376,12 +380,12 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
    -- Prompt
-   awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+   awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen.index]:run() end),
 
    awful.key({ modkey }, "x",
              function ()
                 awful.prompt.run({ prompt = "Run Lua code: " },
-                                 mypromptbox[mouse.screen].widget,
+                                 mypromptbox[mouse.screen.index].widget,
                                  awful.util.eval, nil,
                                  awful.util.getdir("cache") .. "/history_eval")
    end),
@@ -389,16 +393,30 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey }, "p", function() menubar.show() end),
 
    -- bind PrintScrn to capture a screen
-   awful.key({ modkey }, "Print", function () awful.util.spawn("capscr",false) end)
+   awful.key({ modkey }, "Print", function () awful.util.spawn("capscr",false) end),
+
+   -- Search vor $(primary selection) in firefox
+   awful.key({ modkey }, "e", function () awful.util.spawn("open_primary_selection_in_ff.sh") end),
+   -- Switch keyboard layout
+   awful.key({ modkey }, "s", function () awful.util.spawn("swkb.sh") end),
+
+   -- testing bring
+   awful.key({ modkey }, 'semicolon', function ()
+                local matcher = function (c)
+                   return awful.rules.match(c, {class = 'xterm'})
+                end
+                awful.client.bring('xterm', matcher)
+   end)
 )
 
 clientkeys = awful.util.table.join(
-   awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
+   awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end), 
    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
+   awful.key({ modkey,           }, "q",      function (c) c:kill()                         end),
    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
-   awful.key({ modkey, "Shift"   }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-   awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
-   --awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
+   awful.key({ modkey,           }, "Return", function (c) c:swap(awful.client.getmaster()) end),
+   awful.key({ modkey, "Shift"   }, "m",      awful.client.movetoscreen                        ),
+   awful.key({ modkey, "Shift"   }, "t",      function (c) c.ontop = not c.ontop            end),
    awful.key({ modkey,           }, "n",
              function (c)
                 -- The client currently has the input focus, so it cannot be
@@ -407,21 +425,36 @@ clientkeys = awful.util.table.join(
    end),
    awful.key({ modkey,           }, "m",
              function (c)
-                c.maximized_horizontal = not c.maximized_horizontal
-                c.maximized_vertical   = not c.maximized_vertical
+                if c.maximized then
+                   c.maximized = false
+                   c.maximized_horizontal = false
+                   c.maximized_vertical = false
+                   c.floating = false
+                else
+                   c.maximized = true
+                   c.maximized_horizontal = true
+                   c.maximized_vertical = true
+                   c.floating = true
+                end
    end),
-   awful.key({ modkey }, "b", 
+   awful.key({ modkey }, "b",
              function ()
-                mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
-                mywibox_bottom[mouse.screen].visible = not mywibox_bottom
-                [mouse.screen].visible
+                mywibox[mouse.screen.index].visible = not mywibox[mouse.screen.index].visible
+                mywibox_bottom[mouse.screen.index].visible = not mywibox_bottom[mouse.screen.index].visible
+                -- naughty.notify{
+                --    title = "this",
+                --    text = "screen is " .. tostring(mouse.screen) .. "\n object is " ..
+                --       tostring(mouse.object_under_pointer ()),
+                -- }
+
    end)
+
 )
 
 -- Create tag bindings for 13 tags.
-local keys = { "`", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "-", "=" }
-for i = 1, 13 do
-   globalkeys = 
+local keys = { "#49", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "#20", "#21", "#22" }
+for i = 1, 14 do
+   globalkeys =
       awful.util.table.join(globalkeys,
                             -- View tag only.
                             awful.key({ modkey }, keys[i],
@@ -483,21 +516,46 @@ awful.rules.rules = {
                     focus = awful.client.focus.filter,
                     raise = true,
                     keys = clientkeys,
-                    buttons = clientbuttons } },
+                    buttons = clientbuttons,
+                    size_hints_honor = false -- https://stackoverflow.com/questions/28369999/awesome-wm-terminal-window-doesnt-take-full-space
+                    ,} },
    { rule = { class = "MPlayer" },
-     properties = { floating = true } },
+     properties = { floating = true, switchtotag=true } },
+
    { rule = { class = "pinentry" },
-     properties = { floating = true } },
-   { rule = { class = "gimp" },
-     properties = { floating = true } },
-   -- Set Firefox to always map on tags number 2 of screen 1.
-   -- { rule = { class = "Firefox" },
-   --   properties = { tag = tags[1][2] } },
-   { rule = { class = "Emacs" }, 
-     properties = { tag = tags[1][1] } },
-   { rule = { class = "luakit" }, 
-     properties = { tag = tags[1][6] } },
+     properties = { floating = true, switchtotag=true } },
+
+   --Set Firefox to always map on tags number 2 of screen 1.
+   { rule = { class = "Firefox" },
+     properties = { tag = tags[1][1], switchtotag=true } },
+
+   { rule = { class = "Emacs" },
+     properties = { tag = tags[1][2], switchtotag=true } },
+
+   { rule = { class = "Thunderbird" },
+     properties = { tag = tags[1][3], switchtotag=true } },
+
+   { rule = { class = "Nemo" },
+     properties = { tag = tags[1][4], switchtotag=true} },
+
+   { rule = { class = "libreoffice-calc" },
+     properties = { tag = tags[1][5], switchtotag=true } },
+
+   { rule = { class = "Gimp-2.8" },
+     properties = { tag = tags[1][6], floating = true, switchtotag=true } },
+
+   { rule = { class = "rootTerm" },
+     properties = { tag = tags[1][13], switchtotag=true } },
+
+   -- { rule = { class = "luakit" },
+   --   properties = { tag = tags[1][6], switchtotag=true } },
+   --   { rule = { class = "Chromium" },
+   --     properties = { tag = tags[1][3], switchtotag=true } },
+   --   { rule = { class = "chromium" },
+   --     properties = { tag = tags[1][3], switchtotag=true } },
 }
+
+
 -- }}}
 
 function tsize(T)
@@ -507,7 +565,7 @@ function tsize(T)
 end
 
 -- Prints a naughtify dialog without timeout (for debugging)
-function note (s) 
+function note (s)
    naughty.notify({ preset = naughty.config.presets.debug,
                     title = "Test Suit",
                     text = s
@@ -550,7 +608,7 @@ function manageclient(c, startup)
       -- Set the windows at the slave,
       -- i.e. put it at the end of others instead of setting it master.
       awful.client.setslave(c)
-      
+
       -- Put windows in a smart way, only if they do not set an initial position.
       if not c.size_hints.user_position and not c.size_hints.program_position then
          awful.placement.no_overlap(c)
@@ -579,10 +637,10 @@ function manageclient(c, startup)
       col[5] = 9 -- for debug
 
       local column = col[1]
-      
+
       --local nc = awful.client.next(1,focusedc)
-      local nc = nexttiledc(focusedc) 
-      
+      local nc = nexttiledc(focusedc)
+
       while column == awful.client.idx(nc)['col'] and cnt < 100 do
          cnt = cnt + 1
          col[cnt] = awful.client.idx(nc)['col'] -- for debug
@@ -601,15 +659,15 @@ function manageclient(c, startup)
       -- In the second column, new clients are spawned below the focused one.
       elseif column == 1 and cnt > 2 then
          local swt = cnt - 2
-         
+
          while swt > 0 do
             awful.client.swap.bydirection("up",c)
             swt = swt - 1
          end
       end
-      
+
       client.focus = c
-      --]      
+      --]
       --[[ Debugging notes
       note ("idx: " .. idx[1] .. " " .. idx[2] .. " " .. idx[3] ..  " " .. idx[4] .. " " .. idx[5] ..
                           "\ncol: " .. col[1] .. " " .. col[2] .. " " .. col[3] ..  " " .. col[4] .. " " .. col[5] ..
@@ -626,7 +684,7 @@ function manageclient(c, startup)
                           client.focus = c
                        end
    end)
-   
+
    local titlebars_enabled = false
    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
       -- buttons for the titlebar
@@ -676,9 +734,118 @@ end
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", manageclient)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c)
+                         c.border_color = beautiful.border_focus
+                         c.opacity = 1
+end)
+client.connect_signal("unfocus", function(c)
+                         c.border_color = beautiful.border_normal
+                         c.opacity = 0.8
+end)
 -- }}}
 
+-- mcabber notification profiles
+naughty.config.presets.msg = {
+   bg = "#000000",
+   fg = "#ffffff",
+   timeout = 10,
+   hover_timeout = 0,
+}
+naughty.config.presets.online = {
+   bg = "#1f880e80",
+   fg = "#ffffff",
+}
+naughty.config.presets.chat = naughty.config.presets.online
+naughty.config.presets.away = {
+    bg = "#eb4b1380",
+    fg = "#ffffff",
+}
+naughty.config.presets.xa = {
+    bg = "#65000080",
+    fg = "#ffffff",
+}
+naughty.config.presets.dnd = {
+    bg = "#65340080",
+    fg = "#ffffff",
+}
+naughty.config.presets.invisible = {
+    bg = "#ffffff80",
+    fg = "#000000",
+}
+naughty.config.presets.offline = {
+    bg = "#64636380",
+    fg = "#ffffff",
+}
+naughty.config.presets.requested = naughty.config.presets.offline
+naughty.config.presets.error = {
+    bg = "#ff000080",
+    fg = "#ffffff",
+}
 
+-- mcabber notification handler
+muc_nick = "ree5"
 
+function mcabber_event_hook(kind, direction, jid, msg)
+    if kind == "MSG" then
+        if direction == "IN" or direction == "MUC" then
+            local filehandle = io.open(msg)
+            local txt = filehandle:read("*all")
+            filehandle:close()
+            awful.util.spawn("rm "..msg)
+            if direction == "MUC" and txt:match("^<" .. muc_nick .. ">") then
+                return
+            end
+            naughty.notify{
+               preset = naughty.config.presets.msg,
+               icon = "chat_msg_recv",
+               text = awful.util.escape(txt),
+               title = jid
+            }
+        end
+    elseif kind == "STATUS" then
+        local mapping = {
+            [ "O" ] = "online",
+            [ "F" ] = "chat",
+            [ "A" ] = "away",
+            [ "N" ] = "xa",
+            [ "D" ] = "dnd",
+            [ "I" ] = "invisible",
+            [ "_" ] = "offline",
+            [ "?" ] = "error",
+            [ "X" ] = "requested"
+        }
+        local status = mapping[direction]
+        local iconstatus = status
+        if not status then
+            status = "error"
+        end
+        if jid:match("icq") then
+            iconstatus = "icq/" .. status
+        end
+        naughty.notify{
+            preset = naughty.config.presets[status],
+            text = jid .. " went " .. status,
+            icon = iconstatus
+        }
+    end
+end
+
+-- Autorun programs
+autorun = true
+
+autorunApps =
+   {
+      "dropbox",
+      "barrier",
+   }
+
+if autorun then
+   for app = 1, #autorunApps do
+      awful.util.spawn(autorunApps[app])
+      naughty.notify{
+         text = autorunApps[app] .. " started",
+      }
+   end
+end
+
+   

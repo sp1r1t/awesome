@@ -1,3 +1,4 @@
+
 -- ror.lua
 -- This is the file goes in your ~/.config/awesome/ directory
 -- It contains your table of 'run or raise' key bindings for aweror.lua
@@ -12,23 +13,32 @@
 -- for browsers, or the file name for emacs).
 
 table5={
-   -- ["Control-z"]={"google-chrome --app=http://www.rdio.com","www.rdio.com", "instance"},
-   -- ["e"]={"emacsclient -a emacs -n -c","Emacs"}, 
-   -- ["w"]={"firefox","Firefox"}, 
-   -- ["v"]={"firefox -new-window 'http://www.evernote.com/Home.action?login=true#v=l&so=mn'","Evernote", "name"}, 
-   -- ["g"]={"firefox -new-window 'http://mail.google.com/mail/'","Gmail","name"}, 
-   ["t"]={"xterm","xterm", "instance"}, 
-   -- ["f"]={"xterm -name mcTerm -e mc -d","mcTerm", "instance"}, 
-   -- ["Shift-s"]={"xterm -name rootTerm -cr red -title rootTerm -e su","rootTerm", "instance"}, 
-   -- ["t"]={"xterm -name htopTerm -e htop","htopTerm","instance"}, 
+
    ["Shift-b"]={"xterm -title rtorrentTerm -e rtorrent","rtorrentTerm","name"}, 
-   -- ["z"]={"xterm -name mocpTerm -e mocp","mocpTerm", "instance"} 
-   ["i"]={"luakit", "luakit", "class"},
-   ["c"]={"chromium", "Chromium", "class"},
+
+   ["g"]={'gimp-2.8', 'gimp-2.8', "class"},
+
+   ["i"]={"firefox", "firefox", "class"},
+
+   -- ["Control-j"]={"xterm -title jabber -e mcabber", "jabber", "name"},
+
+   
    ["o"]={"emacsclient -c", "Emacs", "class"},
    ["Shift-o"]={"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
    ["Control-o"]={"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
-   ["g"]={"gimp", "gimp", "class"},
+
+
+   ["u"]={"nemo", "Nemo", "class"},
+
+   ["t"]={"xterm","xterm", "instance"}, 
+
    ["y"]={"evince", "Evince", "class"},
-   ["s"]={"xterm -title Sup -e sup", "Sup", "name"}
+   ["z"]={"evince", "Evince", "class"},
+
+   ["["]={"xterm -title irssi -e irssi", "irssi", "name"},
+
+   ['\\']={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
+   ["#"]={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
+
+   [","]={"thunderbird", "Thunderbird", "class"}
 }

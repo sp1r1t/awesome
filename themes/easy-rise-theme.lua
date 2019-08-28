@@ -1,52 +1,38 @@
 ---------------------------
---   Quiet Power Theme   --
+--    Easy Rise Theme    --
 ---------------------------
 
 theme = {}
 
 theme.font          = "sans mono 10"
 
-theme.bg_normal     = "#346b5b"
+theme.bg_normal     = "#dddddd"
 --theme.bg_focus      = "#535d6c"
-theme.bg_focus      = "#bfd878"
-theme.bg_urgent     = "#871c01"
+theme.bg_focus      = "#8BB38B" --AD9EE8"
+theme.bg_urgent     = "#E04F4F"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#bfd878"
-theme.fg_focus      = "#346b5b"
-theme.fg_urgent     = "#346b5b"
-theme.fg_minimize   = "#346b5b"
+theme.fg_normal     = "#777777"
+theme.fg_focus      = "#222222"
+theme.fg_urgent     = "#dddddd"
+theme.fg_minimize   = "#dddddd"
 
 theme.border_width  = 2
-theme.border_normal = "#387640"
-theme.border_focus  = "#bfd878"
+theme.border_normal = "#333333"
+theme.border_focus  = "#50DE50"--0FBA0F"
 theme.border_marked = "#91231c"
 
+-- Status colors (cpu, mem, net use)
+color_relax = "#33BD06" -- "#83ff73"
+color_walk = "#DBC900" -- "#ffff33"
+color_run = "#ff7633"
+color_limit = "#ff0000"
 
----[[
---color2 = "#363d4b"
-color2 = "#445f40"
-color1 = "#555b2f"
-color3 = "#aaae4a"
-
-theme.bg_normal     = color1
---theme.bg_focus      = "#535d6c"
-theme.bg_focus      = color2
-theme.bg_urgent     = "#871c01"
-theme.bg_minimize   = "#444444"
-theme.bg_systray    = theme.bg_normal
-
-theme.fg_normal     = color3
-theme.fg_focus      = color3
-theme.fg_urgent     = "#baa000"
-theme.fg_minimize   = "#baa000"
-
-theme.border_width  = 2
-theme.border_normal = color1
-theme.border_focus  = color2
-theme.border_marked = "#91231c"
---]]
+color_relax_ = "33BD06" -- "#83ff73"
+color_walk_ = "DBC900" -- "#ffff33"
+color_run_ = "ff7633"
+color_limit_ = "ff0000"
 
 -- There are other variable sets
 -- overriding the default one when
@@ -58,6 +44,7 @@ theme.border_marked = "#91231c"
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
+--theme.tasklist_bg_focus = "#ff0000"
 
 -- Display the taglist squares
 theme.taglist_squares_sel   = "/usr/share/awesome/themes/default/taglist/squarefw.png"
@@ -100,7 +87,9 @@ theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/defau
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
 --theme.wallpaper = "/usr/share/awesome/themes/default/background.png"
-theme.wallpaper = "/home/spirit/medien/pix/walls/pagoda-forest.png"
+--theme.wallpaper = "/home/jinn/medien/pix/walls/1432698902716.jpg"
+--theme.wallpaper = "/home/jinn/medien/pix/walls/1432452362423.jpg"
+theme.wallpaper = "/home/jinn/medien/pix/walls/1432686359104.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
