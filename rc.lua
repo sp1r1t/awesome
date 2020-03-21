@@ -4,22 +4,30 @@ local gears = require("gears")
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
+
 -- Widget and layout library
 local wibox = require("wibox")
+
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
 local naughty = require("naughty")
-naughty.config.defaults.font             = beautiful.font or "Verdana 13"
-naughty.config.defaults.position         = "top_right"
+naughty.config.defaults.font = beautiful.font or "Verdana 13"
+naughty.config.defaults.position = "top_right"
 local menubar = require("menubar")
+
 -- Vicious
 local vicious = require("vicious")
+
 -- Filehandle
 --local filehandle = require("filehandle")
 
+-- Global Variables
+home="/home/j.konrath/"
+iconPath = home .. '.config/awesome/icons/'
 
--- {{{ Error handling
+-- Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
@@ -42,22 +50,31 @@ do
                              in_error = false
    end)
 end
--- }}}
 
 
--- {{ Helper function definitions
+---[[ Helper function definitions
 function col (text, color)
    return "<span color='#" .. color .. "'>" .. text .. "</span>"
 end
--- }}
+
+-- Prints a naughtify dialog without timeout (for debugging)
+function note (s)
+   naughty.notify({ preset = naughty.config.presets.debug,
+                    title = "Test Suit",
+                    text = tostring(s)
+   })
+end
+--]]
 
 
--- {{{ Variable definitions
+---[[ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
+--beautiful.init("/usr/share/awesome/themes/sky/theme.lua")
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
---beautiful.init("~/.config/awesome/themes/easy-rise-theme.lua")
+beautiful.init("~/.config/awesome/themes/easy-rise-theme.lua")
 --beautiful.init("~/.config/awesome/themes/done-and-there.lua")
-beautiful.init("~/.config/awesome/themes/ghost-theme.lua")
+--beautiful.init("~/.config/awesome/themes/ghost-theme.lua")
+
 -- App folders define where the menubar (strg+p) searches for applications
 app_folders = {"/usr/share/applications/", "~/.local/share/applications/"}
 
@@ -66,19 +83,12 @@ app_folders = {"/usr/share/applications/", "~/.local/share/applications/"}
 --awful.util.spawn_with_shell("xcompmgr -cF &")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xterm"
+terminal = "urxvt"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
-
--- composite manager
--- awful.util.spawn_with_shell("xcompmgr &")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
@@ -107,15 +117,29 @@ if beautiful.wallpaper then
 end
 -- }}}
 
--- {{{ Tags
+---[[ Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
+
+-- individual tag settings
+names = {"", "", "", "", "", ""};
+icons = {"tiger64.png", "world.svg", "edit64.png", "coding64.png", "coding64.png", "music64.png"}
+
 for s = 1, screen.count() do
-   -- Each screen has its own tag table.
-   -- orig: tags[s] = awful.tag.new({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
-   tags[s] = awful.tag.new({ "`", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "-", "=", "<-" }, s, layouts[1])
+   tags[s] = {}
+   for t = 1, # names do
+      options = {
+         layout = awful.layout.suit.tile,
+         icon = iconPath .. icons[t],
+         screen = s,
+         gap_single_client = false,
+         gap = 5,
+         selected = t == 1 or false
+      }
+
+      tags[s][t] = awful.tag.add(names[t], options)
+   end
 end
--- }}}
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
@@ -126,10 +150,11 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+mymainmenu = awful.menu({
+   items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+   { "open terminal", terminal }
 }
-                       })
+})
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
@@ -139,7 +164,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{ Bottom wibox
-require("bottom-wibox")
+-- require("bottom-wibox")
 --}}
 
 -- {{{ Wibox
@@ -207,6 +232,7 @@ for s = 1, screen.count() do
                              awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
                              awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
                              awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+
    -- Create a taglist widget
    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
 
@@ -389,6 +415,7 @@ globalkeys = awful.util.table.join(
                                  awful.util.eval, nil,
                                  awful.util.getdir("cache") .. "/history_eval")
    end),
+
    -- Menubar
    awful.key({ modkey }, "p", function() menubar.show() end),
 
@@ -396,7 +423,7 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey }, "Print", function () awful.util.spawn("capscr",false) end),
 
    -- Search vor $(primary selection) in firefox
-   awful.key({ modkey }, "e", function () awful.util.spawn("open_primary_selection_in_ff.sh") end),
+   awful.key({ modkey }, "e", function () awful.util.spawn("~/skripte/open_primary_selection_in_ff.sh") end),
    -- Switch keyboard layout
    awful.key({ modkey }, "s", function () awful.util.spawn("swkb.sh") end),
 
@@ -410,7 +437,7 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
-   awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end), 
+   awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
    awful.key({ modkey,           }, "q",      function (c) c:kill()                         end),
    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
@@ -439,15 +466,13 @@ clientkeys = awful.util.table.join(
    end),
    awful.key({ modkey }, "b",
              function ()
-                mywibox[mouse.screen.index].visible = not mywibox[mouse.screen.index].visible
-                mywibox_bottom[mouse.screen.index].visible = not mywibox_bottom[mouse.screen.index].visible
-                -- naughty.notify{
-                --    title = "this",
-                --    text = "screen is " .. tostring(mouse.screen) .. "\n object is " ..
-                --       tostring(mouse.object_under_pointer ()),
-                -- }
-
-   end)
+               if mywibox then
+                  mywibox[mouse.screen.index].visible = not mywibox[mouse.screen.index].visible
+               end
+               if mywibox_bottom then
+                  mywibox_bottom[mouse.screen.index].visible = not mywibox_bottom[mouse.screen.index].visible
+               end
+            end)
 
 )
 
@@ -526,8 +551,8 @@ awful.rules.rules = {
      properties = { floating = true, switchtotag=true } },
 
    --Set Firefox to always map on tags number 2 of screen 1.
-   { rule = { class = "Firefox" },
-     properties = { tag = tags[1][1], switchtotag=true } },
+   --{ rule = { class = "Firefox" },
+   --  properties = { tag = tags[1][1], switchtotag=true } },
 
    { rule = { class = "Emacs" },
      properties = { tag = tags[1][2], switchtotag=true } },
@@ -564,14 +589,6 @@ function tsize(T)
   return count
 end
 
--- Prints a naughtify dialog without timeout (for debugging)
-function note (s)
-   naughty.notify({ preset = naughty.config.presets.debug,
-                    title = "Test Suit",
-                    text = s
-   })
-end
-
 -- If the next client is non floating it is returned.
 -- If the next client is floating, the next non floating client is returned.
 function nexttiledc(client)
@@ -604,10 +621,15 @@ root.keys(globalkeys)
 
 -- {{{ Signals
 function manageclient(c, startup)
+   naughty.notify{
+      text = starup
+    }
    if not startup then
       -- Set the windows at the slave,
       -- i.e. put it at the end of others instead of setting it master.
+      -- awful.client.movetoscreen(c, client.focus.screen)
       awful.client.setslave(c)
+      client.focus = c
 
       -- Put windows in a smart way, only if they do not set an initial position.
       if not c.size_hints.user_position and not c.size_hints.program_position then
@@ -831,21 +853,22 @@ function mcabber_event_hook(kind, direction, jid, msg)
 end
 
 -- Autorun programs
-autorun = true
+autorun = false
 
 autorunApps =
    {
-      "dropbox",
-      "barrier",
+--      "dropbox",
+--      "barrier",
+        "emacs --daemon",
    }
 
 if autorun then
    for app = 1, #autorunApps do
-      awful.util.spawn(autorunApps[app])
+      awful.spawn.once(autorunApps[app], nil, nil, nil)
       naughty.notify{
          text = autorunApps[app] .. " started",
       }
    end
 end
 
-   
+
