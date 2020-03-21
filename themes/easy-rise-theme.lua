@@ -107,9 +107,11 @@ theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
 theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
 
--- Define the icon theme for application icons. If not set then the icons 
+-- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
+
+theme.wallpaper = "~/.walls/appa.jpg"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
