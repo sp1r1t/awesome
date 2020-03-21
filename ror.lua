@@ -14,31 +14,31 @@
 
 table5={
 
-   ["Shift-b"]={"xterm -title rtorrentTerm -e rtorrent","rtorrentTerm","name"}, 
+   -- ["Shift-b"]={"xterm -title rtorrentTerm -e rtorrent","rtorrentTerm","name"}, 
+   ["c"]={"code", "Code", "class"},
 
    ["g"]={'gimp-2.8', 'gimp-2.8', "class"},
 
-   ["i"]={"firefox", "firefox", "class"},
+   ["i"]={"firefox", "Firefox", "class"},
 
    -- ["Control-j"]={"xterm -title jabber -e mcabber", "jabber", "name"},
 
    
    ["o"]={"emacsclient -c", "Emacs", "class"},
-   ["Shift-o"]={"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
-   ["Control-o"]={"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
-
-
-   ["u"]={"nemo", "Nemo", "class"},
+   -- ["Shift-o"]={"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
+   --["Control-o"]={"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
 
    ["t"]={"xterm","xterm", "instance"}, 
 
+   -- ["u"]={"nemo", "Nemo", "class"},
+
    ["y"]={"evince", "Evince", "class"},
-   ["z"]={"evince", "Evince", "class"},
+   -- ["z"]={"evince", "Evince", "class"},
 
-   ["["]={"xterm -title irssi -e irssi", "irssi", "name"},
+   -- ["["]={"xterm -title irssi -e irssi", "irssi", "name"},
 
-   ['\\']={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
-   ["#"]={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
+   -- ['\\']={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
+   -- ["#"]={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
 
-   [","]={"thunderbird", "Thunderbird", "class"}
+   -- [","]={"thunderbird", "Thunderbird", "class"}
 }
