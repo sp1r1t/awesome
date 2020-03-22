@@ -23,9 +23,8 @@ local vicious = require("vicious")
 -- Filehandle
 --local filehandle = require("filehandle")
 
--- Global Variables
-home="/home/j.konrath/"
-iconPath = home .. '.config/awesome/icons/'
+-- Load configuration file
+local config = require('config')
 
 -- Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -79,11 +78,13 @@ beautiful.init("~/.config/awesome/themes/easy-rise-theme.lua")
 app_folders = {"/usr/share/applications/", "~/.local/share/applications/"}
 
 
+require('wallpaper')
+
 -- start composition manager
---awful.util.spawn_with_shell("xcompmgr -cF &")
+--awful.spawn_with_shell("xcompmgr -cF &")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
+terminal = "xfce4-terminal"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -109,26 +110,7 @@ local layouts =
 
 -- }}}
 
--- {{{ Wallpaper
-local function set_wallpaper()
-   -- Wallpaper
-   if beautiful.wallpaper then
-      for s = 1, screen.count() do
-         local wallpaper = beautiful.wallpaper
-         -- If wallpaper is a function, call it with the screen
-         if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-         end
-         gears.wallpaper.maximized(wallpaper, s, true)
-      end
-   end
-end
 
-set_wallpaper()
-
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
--- }}}
 
 ---[[ Tags
 -- Define a tag table which hold all screen tags.
@@ -143,7 +125,7 @@ for s = 1, screen.count() do
    for t = 1, # names do
       options = {
          layout = awful.layout.suit.tile,
-         icon = iconPath .. icons[t],
+         icon = config.iconPath .. icons[t],
          screen = s,
          gap_single_client = false,
          gap = 5,
@@ -155,7 +137,7 @@ for s = 1, screen.count() do
 end
 
 -- {{{ Menu
--- Create a laucher widget and a main menu
+-- Create a launcher widget and a main menu
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
@@ -403,7 +385,10 @@ globalkeys = awful.util.table.join(
    --        end),
 
    -- Standard program
-   awful.key({ modkey, "Shift"   }, "Return", function () awful.util.spawn(terminal) end),
+   awful.key({ modkey, "Shift"   }, "Return", function () awful.spawn(terminal, {
+      floating = false,
+      tag = mouse.screen.selected_tag,
+   }) end),
    awful.key({ modkey, "Control" }, "r", awesome.restart),
    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -433,20 +418,16 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey }, "p", function() menubar.show() end),
 
    -- bind PrintScrn to capture a screen
-   awful.key({ modkey }, "Print", function () awful.util.spawn("capscr",false) end),
+   awful.key({ modkey }, "Print", function () awful.spawn("capscr",false) end),
 
    -- Search vor $(primary selection) in firefox
-   awful.key({ modkey }, "e", function () awful.util.spawn("~/skripte/open_primary_selection_in_ff.sh") end),
+   awful.key({ modkey }, "e", function ()
+      note('opening in ff')
+      awful.spawn(config.home .. "skripte/open_primary_selection_in_ff.sh")
+   end),
    -- Switch keyboard layout
-   awful.key({ modkey }, "s", function () awful.util.spawn("swkb.sh") end),
+   awful.key({ modkey }, "s", function () awful.spawn("swkb.sh") end),
 
-   -- testing bring
-   awful.key({ modkey }, 'semicolon', function ()
-                local matcher = function (c)
-                   return awful.rules.match(c, {class = 'xterm'})
-                end
-                awful.client.bring('xterm', matcher)
-   end)
 )
 
 clientkeys = awful.util.table.join(
@@ -557,33 +538,36 @@ awful.rules.rules = {
                     buttons = clientbuttons,
                     size_hints_honor = false -- https://stackoverflow.com/questions/28369999/awesome-wm-terminal-window-doesnt-take-full-space
                     ,} },
+
    { rule = { class = "MPlayer" },
      properties = { floating = true, switchtotag=true } },
 
-   { rule = { class = "pinentry" },
-     properties = { floating = true, switchtotag=true } },
-
-   --Set Firefox to always map on tags number 2 of screen 1.
-   --{ rule = { class = "Firefox" },
-   --  properties = { tag = tags[1][1], switchtotag=true } },
-
-   { rule = { class = "Emacs" },
-     properties = { tag = tags[1][2], switchtotag=true } },
-
-   { rule = { class = "Thunderbird" },
+     { rule = { class = "Emacs" },
      properties = { tag = tags[1][3], switchtotag=true } },
 
-   { rule = { class = "Nemo" },
-     properties = { tag = tags[1][4], switchtotag=true} },
+     { rule = { class = "Firefox" },
+     properties = { tag = tags[1][2], swtichtotag=true} },
 
-   { rule = { class = "libreoffice-calc" },
-     properties = { tag = tags[1][5], switchtotag=true } },
+     { rule = { class = "urxvt" },
+     properties = { tag = tags[1][4], swtichtotag=true} },
 
-   { rule = { class = "Gimp-2.8" },
-     properties = { tag = tags[1][6], floating = true, switchtotag=true } },
+   --   { rule = { class = "pinentry" },
+   --     properties = { floating = true, switchtotag=true } },
 
-   { rule = { class = "rootTerm" },
-     properties = { tag = tags[1][13], switchtotag=true } },
+   -- { rule = { class = "Thunderbird" },
+   --   properties = { tag = tags[1][3], switchtotag=true } },
+
+   -- { rule = { class = "Nemo" },
+   --   properties = { tag = tags[1][4], switchtotag=true} },
+
+   -- { rule = { class = "libreoffice-calc" },
+   --   properties = { tag = tags[1][5], switchtotag=true } },
+
+   -- { rule = { class = "Gimp-2.8" },
+   --   properties = { tag = tags[1][6], floating = true, switchtotag=true } },
+
+   -- { rule = { class = "rootTerm" },
+   --   properties = { tag = tags[1][13], switchtotag=true } },
 
    -- { rule = { class = "luakit" },
    --   properties = { tag = tags[1][6], switchtotag=true } },
@@ -823,7 +807,7 @@ function mcabber_event_hook(kind, direction, jid, msg)
             local filehandle = io.open(msg)
             local txt = filehandle:read("*all")
             filehandle:close()
-            awful.util.spawn("rm "..msg)
+            awful.spawn("rm "..msg)
             if direction == "MUC" and txt:match("^<" .. muc_nick .. ">") then
                 return
             end
@@ -867,7 +851,7 @@ autorun = true
 
 autorunApps =
    {
-      "/usr/bin/bash /home/j.konrath/.xinitrc",
+      "/usr/bin/bash /config.home/j.konrath/.xinitrc",
       --      "dropbox",
       --      "barrier",
       -- "emacs --daemon",
