@@ -66,6 +66,7 @@ end
 --]]
 
 
+
 ---[[ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 --beautiful.init("/usr/share/awesome/themes/sky/theme.lua")
@@ -133,6 +134,21 @@ for s = 1, screen.count() do
       }
 
       tags[s][t] = awful.tag.add(names[t], options)
+   end
+end
+
+
+swap_screens = function ()
+   if (screen.count() == 2) then
+      note(screen.count())
+      t = client.focus and client.focus.first_tag or nil
+      if t then
+         if (t.screen == screen[1]) then
+            t.screen = screen[2]
+         elseif (t.screen == screen[2]) then
+            t.screen = screen[1]
+         end
+      end
    end
 end
 
@@ -373,8 +389,8 @@ globalkeys = awful.util.table.join(
    -- Layout manipulation
    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
-   awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-   awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
+   awful.key({ modkey, "Shift"   }, "n", function () awful.screen.focus_relative( 1) end),
+   awful.key({ modkey, "Shift"   }, "p", function () awful.screen.focus_relative(-1) end),
    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
    --    awful.key({ modkey,           }, "Tab",
    --        function ()
@@ -400,6 +416,7 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+   awful.key({ modkey, "Shift"   }, "s",      swap_screens),
 
    awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
@@ -426,7 +443,7 @@ globalkeys = awful.util.table.join(
       awful.spawn(config.home .. "skripte/open_primary_selection_in_ff.sh")
    end),
    -- Switch keyboard layout
-   awful.key({ modkey }, "s", function () awful.spawn("swkb.sh") end),
+   awful.key({ modkey }, "s", function () awful.spawn("swkb.sh") end)
 
 )
 
@@ -525,60 +542,8 @@ clientbuttons = awful.util.table.join(
 root.keys(globalkeys)
 -- }}}
 
--- {{{ Rules
--- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = {
-   -- All clients will match this rule.
-   { rule = { },
-     properties = { border_width = beautiful.border_width,
-                    border_color = beautiful.border_normal,
-                    focus = awful.client.focus.filter,
-                    raise = true,
-                    keys = clientkeys,
-                    buttons = clientbuttons,
-                    size_hints_honor = false -- https://stackoverflow.com/questions/28369999/awesome-wm-terminal-window-doesnt-take-full-space
-                    ,} },
-
-   { rule = { class = "MPlayer" },
-     properties = { floating = true, switchtotag=true } },
-
-     { rule = { class = "Emacs" },
-     properties = { tag = tags[1][3], switchtotag=true } },
-
-     { rule = { class = "Firefox" },
-     properties = { tag = tags[1][2], swtichtotag=true} },
-
-     { rule = { class = "urxvt" },
-     properties = { tag = tags[1][4], swtichtotag=true} },
-
-   --   { rule = { class = "pinentry" },
-   --     properties = { floating = true, switchtotag=true } },
-
-   -- { rule = { class = "Thunderbird" },
-   --   properties = { tag = tags[1][3], switchtotag=true } },
-
-   -- { rule = { class = "Nemo" },
-   --   properties = { tag = tags[1][4], switchtotag=true} },
-
-   -- { rule = { class = "libreoffice-calc" },
-   --   properties = { tag = tags[1][5], switchtotag=true } },
-
-   -- { rule = { class = "Gimp-2.8" },
-   --   properties = { tag = tags[1][6], floating = true, switchtotag=true } },
-
-   -- { rule = { class = "rootTerm" },
-   --   properties = { tag = tags[1][13], switchtotag=true } },
-
-   -- { rule = { class = "luakit" },
-   --   properties = { tag = tags[1][6], switchtotag=true } },
-   --   { rule = { class = "Chromium" },
-   --     properties = { tag = tags[1][3], switchtotag=true } },
-   --   { rule = { class = "chromium" },
-   --     properties = { tag = tags[1][3], switchtotag=true } },
-}
-
-
--- }}}
+-- load rules
+require('rules')
 
 function tsize(T)
   local count = 0
@@ -851,7 +816,9 @@ autorun = true
 
 autorunApps =
    {
-      "/usr/bin/bash /config.home/j.konrath/.xinitrc",
+      "/usr/bin/bash " .. config.home .. ".xinitrc",
+      -- "firefox",
+      -- "code"
       --      "dropbox",
       --      "barrier",
       -- "emacs --daemon",
