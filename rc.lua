@@ -12,6 +12,9 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 naughty.config.defaults.font             = beautiful.font or "Verdana 13"
 naughty.config.defaults.position         = "top_right"
+naughty.config.defaults.max_height = 200
+naughty.config.defaults.icon_size = 50
+
 local menubar = require("menubar")
 -- Vicious
 local vicious = require("vicious")
@@ -66,7 +69,7 @@ app_folders = {"/usr/share/applications/", "~/.local/share/applications/"}
 --awful.util.spawn_with_shell("xcompmgr -cF &")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xterm"
+terminal = "rxvt"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -139,7 +142,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{ Bottom wibox
-require("bottom-wibox")
+-- require("bottom-wibox")
 --}}
 
 -- {{{ Wibox
@@ -396,7 +399,7 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey }, "Print", function () awful.util.spawn("capscr",false) end),
 
    -- Search vor $(primary selection) in firefox
-   awful.key({ modkey }, "e", function () awful.util.spawn("open_primary_selection_in_ff.sh") end),
+   awful.key({ modkey }, "e", function () awful.util.spawn("~/skripte/open_primary_selection_in_ff.sh") end),
    -- Switch keyboard layout
    awful.key({ modkey }, "s", function () awful.util.spawn("swkb.sh") end),
 
@@ -526,8 +529,8 @@ awful.rules.rules = {
      properties = { floating = true, switchtotag=true } },
 
    --Set Firefox to always map on tags number 2 of screen 1.
-   { rule = { class = "Firefox" },
-     properties = { tag = tags[1][1], switchtotag=true } },
+   --{ rule = { class = "Firefox" },
+   --  properties = { tag = tags[1][1], switchtotag=true } },
 
    { rule = { class = "Emacs" },
      properties = { tag = tags[1][2], switchtotag=true } },
@@ -604,10 +607,15 @@ root.keys(globalkeys)
 
 -- {{{ Signals
 function manageclient(c, startup)
+   naughty.notify{
+      text = starup
+    }
    if not startup then
       -- Set the windows at the slave,
       -- i.e. put it at the end of others instead of setting it master.
+      -- awful.client.movetoscreen(c, client.focus.screen)
       awful.client.setslave(c)
+      client.focus = c      
 
       -- Put windows in a smart way, only if they do not set an initial position.
       if not c.size_hints.user_position and not c.size_hints.program_position then
@@ -831,17 +839,18 @@ function mcabber_event_hook(kind, direction, jid, msg)
 end
 
 -- Autorun programs
-autorun = true
+autorun = false
 
 autorunApps =
    {
-      "dropbox",
-      "barrier",
+--      "dropbox",
+--      "barrier",
+        "emacs --daemon",
    }
 
 if autorun then
    for app = 1, #autorunApps do
-      awful.util.spawn(autorunApps[app])
+      awful.spawn.once(autorunApps[app], nil, nil, nil)
       naughty.notify{
          text = autorunApps[app] .. " started",
       }
