@@ -122,15 +122,17 @@ local layouts =
 tags = {}
 
 -- individual tag settings
-names = {"", "", "", "", "", ""};
-icons = {"tiger64.png", "world.svg", "edit64.png", "coding64.png", "coding64.png", "music64.png"}
+names = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}
+-- names = {"", "", "", "", "", ""};
+-- icons = {"tiger64.png", "world.svg", "edit64.png", "coding64.png", "coding64.png", "music64.png"}
+
 
 for s = 1, screen.count() do
    tags[s] = {}
    for t = 1, # names do
       options = {
          layout = awful.layout.suit.tile,
-         icon = config.iconPath .. icons[t],
+         --icon = config.iconPath .. icons[t],
          screen = s,
          gap_single_client = false,
          gap = 5,
