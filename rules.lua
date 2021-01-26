@@ -18,14 +18,14 @@ awful.rules.rules = {
     { rule = { class = "MPlayer" },
       properties = { floating = true, switchtotag=true } },
 
-      { rule = { class = "Emacs" },
-      properties = { tag = tags[1][3], switchtotag=true } },
+      -- { rule = { class = "Emacs" },
+      -- properties = { tag = tags[1][3], switchtotag=true } },
 
-      { rule = { class = "Firefox" },
-      properties = { tag = tags[1][2], swtichtotag=true} },
+      -- { rule = { class = "Firefox" },
+      -- properties = { tag = tags[1][2], swtichtotag=true} },
 
-      { rule = { class = "Code" },
-      properties = { tag = tags[2][4], swtichtotag=true} },
+      -- { rule = { class = "Code" },
+      -- properties = { tag = tags[2][4], swtichtotag=true} },
 
     --   { rule = { class = "pinentry" },
     --     properties = { floating = true, switchtotag=true } },
