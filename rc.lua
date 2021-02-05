@@ -88,8 +88,8 @@ require('wallpaper')
 --awful.spawn_with_shell("xcompmgr -cF &")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "rxvt"
--- terminal = "xfce4-terminal"
+--terminal = "rxvt"
+terminal = "xfce4-terminal"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -821,14 +821,14 @@ function mcabber_event_hook(kind, direction, jid, msg)
 end
 
 -- Autorun programs
-autorun = false
+autorun = true
 
 autorunApps =
    {
       "dropbox",
       "barrier",
       "emacs --daemon",
-      "/usr/bin/bash " .. config.home .. ".xinitrc",
+      -- "/usr/bin/bash " .. config.home .. ".xinitrc",
       -- "firefox",
       -- "code"
       --      "dropbox",
