@@ -156,8 +156,8 @@ for s = 1, screen.count() do
    tempwidget = wibox.widget.textbox()
    vicious.register(tempwidget, vicious.widgets.hddtemp,
                     function(tempwidget, args)
-                       if args['{/dev/sda}'] ~= nil then
-                          temp = args['{/dev/sda}']
+                       if args['{/dev/sde}'] ~= nil then
+                          temp = args['{/dev/sde}']
                        else
                           temp = "N/A"
                        end

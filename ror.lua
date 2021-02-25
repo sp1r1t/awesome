@@ -15,6 +15,7 @@
 table5={
 
    ["Shift-b"]={"xterm -title rtorrentTerm -e rtorrent","rtorrentTerm","name"}, 
+   ["c"]={"code", "code-oss", "class"},
 
    ["g"]={'gimp-2.8', 'gimp-2.8', "class"},
 
@@ -27,10 +28,9 @@ table5={
    ["Shift-o"]={"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
    ["Control-o"]={"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
 
+   ["t"]={"xterm","xterm", "instance"}, 
 
    ["u"]={"nemo", "Nemo", "class"},
-
-   ["t"]={"xterm","xterm", "instance"}, 
 
    ["y"]={"evince", "Evince", "class"},
    ["z"]={"evince", "Evince", "class"},
