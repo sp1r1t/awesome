@@ -89,7 +89,7 @@ require('wallpaper')
 
 -- This is used later as the default terminal and editor to run.
 --terminal = "rxvt"
-terminal = "xfce4-terminal"
+terminal = "uxterm"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
