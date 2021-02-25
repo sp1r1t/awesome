@@ -120,7 +120,7 @@ local layouts =
 tags = {}
 
 -- individual tag settings
-names = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}
+names = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "<-"}
 -- names = {"", "", "", "", "", ""};
 -- icons = {"tiger64.png", "world.svg", "edit64.png", "coding64.png", "coding64.png", "music64.png"}
 
@@ -128,20 +128,20 @@ names = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
    -- orig: tags[s] = awful.tag.new({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
-   tags[s] = awful.tag.new({ "`", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "-", "=", "<-" }, s, layouts[1])
-   -- tags[s] = {}
-   -- for t = 1, # names do
-   --    options = {
-   --       layout = awful.layout.suit.tile,
-   --       --icon = config.iconPath .. icons[t],
-   --       screen = s,
-   --       gap_single_client = false,
-   --       gap = 5,
-   --       selected = t == 1 or false
-   --    }
+   -- tags[s] = awful.tag.new({ "`", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "-", "=", "<-" }, s, layouts[1])
+   tags[s] = {}
+   for t = 1, # names do
+      options = {
+         layout = awful.layout.suit.tile,
+         --icon = config.iconPath .. icons[t],
+         screen = s,
+         gap_single_client = false,
+         gap = 5,
+         selected = t == 1 or false
+      }
 
-   --    tags[s][t] = awful.tag.add(names[t], options)
-   -- end
+      tags[s][t] = awful.tag.add(names[t], options)
+   end
 end
 
 swap_screens = function ()
@@ -446,7 +446,7 @@ globalkeys = awful.util.table.join(
       awful.spawn("open_primary_selection_in_ff.sh")
    end),
    -- Switch keyboard layout
-   awful.key({ modkey }, "s", function () awful.spawn("swkb.sh") end),
+   awful.key({ modkey }, "s", function () awful.spawn("swkb.sh") end)
 
 )
 
@@ -844,4 +844,3 @@ if autorun then
       }
    end
 end
-
