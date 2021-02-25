@@ -94,9 +94,6 @@ editor_cmd = terminal .. " -e " .. editor
 -- Default modkey.
 modkey = "Mod4"
 
--- composite manager
--- awful.util.spawn_with_shell("xcompmgr &")
-
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
    {
@@ -116,13 +113,6 @@ local layouts =
 
 -- }}}
 
--- {{{ Wallpaper
-if beautiful.wallpaper then
-   for s = 1, screen.count() do
-      gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-   end
-end
--- }}}
 
 
 ---[[ Tags
@@ -181,7 +171,7 @@ mymainmenu = awful.menu({
    items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal }
 }
-                       })
+})
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
@@ -405,8 +395,8 @@ globalkeys = awful.util.table.join(
    -- Layout manipulation
    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
-   awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-   awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
+   awful.key({ modkey, "Shift"   }, "n", function () awful.screen.focus_relative( 1) end),
+   awful.key({ modkey, "Shift"   }, "p", function () awful.screen.focus_relative(-1) end),
    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
    --    awful.key({ modkey,           }, "Tab",
    --        function ()
@@ -458,17 +448,10 @@ globalkeys = awful.util.table.join(
    -- Switch keyboard layout
    awful.key({ modkey }, "s", function () awful.spawn("swkb.sh") end),
 
-   -- testing bring
-   awful.key({ modkey }, 'semicolon', function ()
-                local matcher = function (c)
-                   return awful.rules.match(c, {class = 'xterm'})
-                end
-                awful.client.bring('xterm', matcher)
-   end)
 )
 
 clientkeys = awful.util.table.join(
-   awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end), 
+   awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
    awful.key({ modkey,           }, "q",      function (c) c:kill()                         end),
    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
@@ -574,14 +557,6 @@ function tsize(T)
   return count
 end
 
--- Prints a naughtify dialog without timeout (for debugging)
-function note (s)
-   naughty.notify({ preset = naughty.config.presets.debug,
-                    title = "Test Suit",
-                    text = s
-   })
-end
-
 -- If the next client is non floating it is returned.
 -- If the next client is floating, the next non floating client is returned.
 function nexttiledc(client)
@@ -614,10 +589,15 @@ root.keys(globalkeys)
 
 -- {{{ Signals
 function manageclient(c, startup)
+   naughty.notify{
+      text = starup
+    }
    if not startup then
       -- Set the windows at the slave,
       -- i.e. put it at the end of others instead of setting it master.
+      -- awful.client.movetoscreen(c, client.focus.screen)
       awful.client.setslave(c)
+      client.focus = c
 
       -- Put windows in a smart way, only if they do not set an initial position.
       if not c.size_hints.user_position and not c.size_hints.program_position then
