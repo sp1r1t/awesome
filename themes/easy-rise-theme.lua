@@ -86,10 +86,11 @@ theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/def
 theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
---theme.wallpaper = "/usr/share/awesome/themes/default/background.png"
+--theme.wallpaper = "/usr/share/awesome/themes/default/backgund.png"
 --theme.wallpaper = "/home/jinn/medien/pix/walls/1432698902716.jpg"
 --theme.wallpaper = "/home/jinn/medien/pix/walls/1432452362423.jpg"
-theme.wallpaper = "/home/jinn/medien/pix/walls/1432686359104.jpg"
+--theme.wallpaper = "/home/jinn/medien/pix/walls/1432686359104.jpg"
+theme.wallpaper = "~/.walls/appa.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
@@ -111,7 +112,6 @@ theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 
-theme.wallpaper = "~/.walls/appa.jpg"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
