@@ -78,10 +78,10 @@ beautiful.init("~/.config/awesome/themes/easy-rise-theme.lua")
 --beautiful.init("~/.config/awesome/themes/ghost-theme.lua")
 
 -- App folders define where the menubar (strg+p) searches for applications
-app_folders = {"/usr/share/applications/", "~/.local/share/applications/"}
+app_folders = {"/usr/share/applications/", "~/.local/share/applications/", "~/skripte", "~/.bin", "~/bin"}
 
 
--- require('wallpaper')
+require('wallpaper')
 
 -- start composition manager
 --awful.spawn_with_shell("xcompmgr -cF &")
@@ -480,7 +480,7 @@ clientkeys = awful.util.table.join(
    end),
    awful.key({ modkey }, "b",
              function ()
-                awful.util.spawn_with_shell("btcon.sh")
+                awful.util.spawn_with_shell("btcon")
                 -- mywibox[mouse.screen.index].visible = not mywibox[mouse.screen.index].visible
                 -- mywibox_bottom[mouse.screen.index].visible = not mywibox_bottom[mouse.screen.index].visible
                 -- naughty.notify{
