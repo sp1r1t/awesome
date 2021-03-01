@@ -19,7 +19,7 @@ table5={
 
    ["g"]={'gimp-2.8', 'gimp-2.8', "class"},
 
-   ["i"]={"firefox", "Firefox", "class"},
+   ["i"]={"firefox", "firefox", "class"},
 
    -- ["Control-j"]={"xterm -title jabber -e mcabber", "jabber", "name"},
 
