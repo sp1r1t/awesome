@@ -5,7 +5,6 @@ function note(s)
     naughty.notify(
         {
             preset = naughty.config.presets.debug,
-            title = "Test Suit",
             text = tostring(s)
         }
     )
