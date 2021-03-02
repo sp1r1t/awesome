@@ -1,5 +1,6 @@
 local awful = require("awful")
 local ror = require("aweror")
+local menubar = require("menubar")
 require("utils")
 require("layouts")
 
