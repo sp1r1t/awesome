@@ -405,12 +405,24 @@ for s = 1, screen.count() do
       "BAT0"
    )
 
-   -- Create a vicous battery widget
+   -- Create a vicous weather widget
    netwidget = wibox.widget.textbox()
    vicious.register(
       netwidget,
       vicious.widgets.net,
       " ↑${" .. config.netInterface .. " up_kb} ↓${" .. config.netInterface .. " down_kb} "
+   )
+
+   -- Create a vicous weather widget
+   weatherwidget = wibox.widget.textbox()
+   vicious.register(
+      weatherwidget,
+      vicious.widgets.weather,
+      function(widget, args)
+         return " " .. args["{tempc}"] .. "° "
+      end,
+      1200,
+      "LOWW"
    )
 
    -- Create the wibox
@@ -432,6 +444,7 @@ for s = 1, screen.count() do
       right_layout:add(memwidget)
       right_layout:add(batwidget)
       right_layout:add(netwidget)
+      right_layout:add(weatherwidget)
       right_layout:add(mytextclock)
       right_layout:add(mylayoutbox[s])
    end
