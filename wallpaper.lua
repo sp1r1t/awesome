@@ -7,7 +7,6 @@ local function set_wallpaper()
    -- Wallpaper
    if beautiful.wallpaper then
       for s = 1, screen.count() do
-         note("doing wallpaper for screen " .. s)
          local wallpaper
          if screen[s].geometry.width >= screen[s].geometry.height then
             wallpaper = beautiful.wallpaper

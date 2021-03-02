@@ -890,9 +890,9 @@ root.keys(globalkeys)
 
 -- {{{ Signals
 function manageclient(c)
-   naughty.notify {
-      text = "started " .. tostring(c.name) .. " type: " .. tostring(type(c.shape))
-   }
+   -- naughty.notify {
+   --    text = "started " .. tostring(c.name) .. " type: " .. tostring(type(c.shape))
+   -- }
 
    -- if not startup then
    --    -- Set the windows at the slave,
