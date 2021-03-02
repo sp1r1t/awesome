@@ -433,8 +433,8 @@ for s = 1, screen.count() do
    -- Widgets that are aligned to the right
    local right_layout = wibox.layout.fixed.horizontal()
 
-   -- Add info widgets only to horizontal screens
-   if screen[s].geometry.width >= screen[s].geometry.height then
+   -- Add info widgets only to primary screen
+   if screen[s] == screen.primary then
       right_layout:add(wibox.widget.systray())
       right_layout:add(cpuwidget)
       right_layout:add(memwidget)
