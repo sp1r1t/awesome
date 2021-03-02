@@ -461,8 +461,8 @@ for s = 1, screen.count() do
       right_layout:add(netwidget)
       right_layout:add(weatherwidget)
       right_layout:add(mytextclock)
-      right_layout:add(mylayoutbox[s])
    end
+   right_layout:add(mylayoutbox[s])
 
    -- Now bring it all together (with the tasklist in the middle)
    local layout = wibox.layout.align.horizontal()
