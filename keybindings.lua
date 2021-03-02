@@ -1,6 +1,7 @@
 local awful = require("awful")
 local ror = require("aweror")
 require("utils")
+require("layouts")
 
 -- {{{ global mouse bindings
 globalbuttons =
