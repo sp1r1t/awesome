@@ -1,23 +1,22 @@
 local awful = require("awful")
+local ror = require("aweror")
 require("utils")
 
--- {{{ Mouse bindings
-root.buttons(
+-- {{{ global mouse bindings
+globalbuttons =
     awful.util.table.join(
-        awful.button(
-            {},
-            3,
-            function()
-                mymainmenu:toggle()
-            end
-        ),
-        awful.button({}, 4, awful.tag.viewnext),
-        awful.button({}, 5, awful.tag.viewprev)
-    )
+    awful.button(
+        {},
+        3,
+        function()
+            mymainmenu:toggle()
+        end
+    ),
+    awful.button({}, 4, awful.tag.viewnext),
+    awful.button({}, 5, awful.tag.viewprev)
 )
--- }}}
 
--- {{{ Key bindings
+-- {{{ global key bindings
 globalkeys =
     awful.util.table.join(
     awful.key({modkey}, "Left", awful.tag.viewprev),
@@ -250,6 +249,84 @@ globalkeys =
     )
 )
 
+-- add run or raise key bindings
+globalkeys = awful.util.table.join(globalkeys, ror.genkeys(modkey))
+
+-- add tag key bindings for 13 tags.
+local keys = {"#49", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "#20", "#21", "#22"}
+for i = 1, 14 do
+    globalkeys =
+        awful.util.table.join(
+        globalkeys,
+        -- View tag only.
+        awful.key(
+            {modkey},
+            keys[i],
+            function()
+                local screen = mouse.screen
+                local tag = awful.tag.gettags(screen)[i]
+                if tag then
+                    awful.tag.viewonly(tag)
+                end
+            end
+        ),
+        -- Toggle tag.
+        awful.key(
+            {modkey, "Control"},
+            keys[i],
+            function()
+                local screen = mouse.screen
+                local tag = awful.tag.gettags(screen)[i]
+                if tag then
+                    awful.tag.viewtoggle(tag)
+                end
+            end
+        ),
+        -- Move client to tag.
+        awful.key(
+            {modkey, "Shift"},
+            keys[i],
+            function()
+                if client.focus then
+                    local tag = awful.tag.gettags(client.focus.screen)[i]
+                    if tag then
+                        awful.client.movetotag(tag)
+                    end
+                end
+            end
+        ),
+        -- Toggle tag.
+        awful.key(
+            {modkey, "Control", "Shift"},
+            keys[i],
+            function()
+                if client.focus then
+                    local tag = awful.tag.gettags(client.focus.screen)[i]
+                    if tag then
+                        awful.client.toggletag(tag)
+                    end
+                end
+            end
+        )
+    )
+end
+
+-- {{{ client mouse bindings
+clientbuttons =
+    awful.util.table.join(
+    awful.button(
+        {},
+        1,
+        function(c)
+            client.focus = c
+            c:raise()
+        end
+    ),
+    awful.button({modkey}, 1, awful.mouse.client.move),
+    awful.button({modkey}, 3, awful.mouse.client.resize)
+)
+
+-- {{{ client key bindings
 clientkeys =
     awful.util.table.join(
     awful.key(
@@ -324,88 +401,7 @@ clientkeys =
     )
 )
 
--- {{ run or raise
-local ror = require("aweror")
-
--- generate and add the 'run or raise' key bindings to the globalkeys table
-globalkeys = awful.util.table.join(globalkeys, ror.genkeys(modkey))
-
-root.keys(globalkeys)
--- }}
-
--- Create tag bindings for 13 tags.
-local keys = {"#49", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "#20", "#21", "#22"}
-for i = 1, 14 do
-    globalkeys =
-        awful.util.table.join(
-        globalkeys,
-        -- View tag only.
-        awful.key(
-            {modkey},
-            keys[i],
-            function()
-                local screen = mouse.screen
-                local tag = awful.tag.gettags(screen)[i]
-                if tag then
-                    awful.tag.viewonly(tag)
-                end
-            end
-        ),
-        -- Toggle tag.
-        awful.key(
-            {modkey, "Control"},
-            keys[i],
-            function()
-                local screen = mouse.screen
-                local tag = awful.tag.gettags(screen)[i]
-                if tag then
-                    awful.tag.viewtoggle(tag)
-                end
-            end
-        ),
-        -- Move client to tag.
-        awful.key(
-            {modkey, "Shift"},
-            keys[i],
-            function()
-                if client.focus then
-                    local tag = awful.tag.gettags(client.focus.screen)[i]
-                    if tag then
-                        awful.client.movetotag(tag)
-                    end
-                end
-            end
-        ),
-        -- Toggle tag.
-        awful.key(
-            {modkey, "Control", "Shift"},
-            keys[i],
-            function()
-                if client.focus then
-                    local tag = awful.tag.gettags(client.focus.screen)[i]
-                    if tag then
-                        awful.client.toggletag(tag)
-                    end
-                end
-            end
-        )
-    )
-end
-
-clientbuttons =
-    awful.util.table.join(
-    awful.button(
-        {},
-        1,
-        function(c)
-            client.focus = c
-            c:raise()
-        end
-    ),
-    awful.button({modkey}, 1, awful.mouse.client.move),
-    awful.button({modkey}, 3, awful.mouse.client.resize)
-)
-
 -- Set keys
+root.buttons(globalbuttons)
 root.keys(globalkeys)
--- }}}
+-- client keys are set via aweful.rules in clientrules.lua

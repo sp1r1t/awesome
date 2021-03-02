@@ -453,10 +453,11 @@ for s = 1, screen.count() do
 end
 -- }}}
 
--- load keybindings
+-- set keybindings
 require("keybindings")
 
--- load rules
+-- set client rules
+--   also set client keybindings
 require("clientrules")
 
 function tsize(T)
