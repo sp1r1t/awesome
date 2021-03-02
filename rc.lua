@@ -441,7 +441,8 @@ for s = 1, screen.count() do
    )
 
    -- Create the wibox
-   mywibox[s] = awful.wibox({position = "top", screen = s})
+   mywibox[s] =
+      awful.wibox({position = "top", screen = s, border_width = "0", border_color = beautiful.bg_normal, height = 30})
 
    -- Widgets that are aligned to the left
    local left_layout = wibox.layout.fixed.horizontal()
@@ -464,7 +465,7 @@ for s = 1, screen.count() do
    end
    right_layout:add(mylayoutbox[s])
 
-   -- Now bring it all together (with the tasklist in the middle)
+   -- Now bring it all together
    local layout = wibox.layout.align.horizontal()
    layout:set_left(left_layout)
    -- layout:set_middle(mytasklist[s])
@@ -474,7 +475,7 @@ for s = 1, screen.count() do
 
    -- bottom tasklist
    mywibox_bottom = {}
-   mywibox_bottom[s] = awful.wibox({position = "bottom", screen = s})
+   mywibox_bottom[s] = awful.wibox({position = "bottom", screen = s, height = 30})
    mywibox_bottom[s]:set_widget(mytasklist[s])
 end
 -- }}}
