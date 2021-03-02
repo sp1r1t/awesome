@@ -1,6 +1,6 @@
 local config = {}
 
-config.home = "/home/j.konrath/"
+config.home = "/home/jinn/"
 config.iconPath = config.home .. ".config/awesome/icons/"
 config.netInterface = "enp7s0"
 

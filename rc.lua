@@ -98,19 +98,34 @@ require("layouts")
 tags = {}
 
 -- individual tag settings
-names = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "<-"}
+names = {" `", " 1", " 2", " 3", " 4", "5", "6", "7", "8", "9", "0", "-", "=", "<-"}
 -- names = {"", "", "", "", "", ""};
--- icons = {"tiger64.png", "world.svg", "edit64.png", "coding64.png", "coding64.png", "music64.png"}
+icons = {
+   "world.svg",
+   "coding64.png",
+   "edit64.png"
+   -- "coding64.png",
+   -- "tiger64.png",
+   -- "music64.png"
+}
 
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
    -- orig: tags[s] = awful.tag.new({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
    -- tags[s] = awful.tag.new({ "`", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "-", "=", "<-" }, s, layouts[1])
    tags[s] = {}
+   local layout = function(s)
+      if screen[s].geometry.width >= screen[s].geometry.height then
+         return awful.layout.suit.tile
+      else
+         return awful.layout.suit.tile.bottom
+      end
+   end
+
    for t = 1, #names do
       options = {
-         layout = awful.layout.suit.tile,
-         --icon = config.iconPath .. icons[t],
+         layout = layout(s),
+         icon = icons[t] and config.iconPath .. icons[t],
          screen = s,
          gap_single_client = false,
          gap = 5,
@@ -452,10 +467,15 @@ for s = 1, screen.count() do
    -- Now bring it all together (with the tasklist in the middle)
    local layout = wibox.layout.align.horizontal()
    layout:set_left(left_layout)
-   layout:set_middle(mytasklist[s])
+   -- layout:set_middle(mytasklist[s])
    layout:set_right(right_layout)
 
    mywibox[s]:set_widget(layout)
+
+   -- bottom tasklist
+   mywibox_bottom = {}
+   mywibox_bottom[s] = awful.wibox({position = "bottom", screen = s})
+   mywibox_bottom[s]:set_widget(mytasklist[s])
 end
 -- }}}
 
@@ -567,27 +587,27 @@ client.connect_signal(
 -- }}}
 
 -- Apply rounded corners to clients if needed
-if beautiful.border_radius and beautiful.border_radius > 0 then
-   note("rounding corners")
-   -- No rounded corners if there is only one client
-   screen.connect_signal(
-      "arrange",
-      function(s)
-         local only_one_tiled = #s.tiled_clients == 1
-         for _, c in pairs(s.clients) do
-            if (only_one_tiled or c.maximized or c.fullscreen) and not c.floating then
-               c.shape = gears.shape.rectangle
-            else
-               c.shape = rrect(beautiful.border_radius)
-            end
-         end
-      end
-   )
+-- if beautiful.border_radius and beautiful.border_radius > 0 then
+--    note("rounding corners")
+--    -- No rounded corners if there is only one client
+--    screen.connect_signal(
+--       "arrange",
+--       function(s)
+--          local only_one_tiled = #s.tiled_clients == 1
+--          for _, c in pairs(s.clients) do
+--             if (only_one_tiled or c.maximized or c.fullscreen) and not c.floating then
+--                c.shape = gears.shape.rectangle
+--             else
+--                c.shape = rrect(beautiful.border_radius)
+--             end
+--          end
+--       end
+--    )
 
-   beautiful.snap_shape = rrect(beautiful.border_radius * 2)
-else
-   beautiful.snap_shape = gears.shape.rectangle
-end
+--    beautiful.snap_shape = rrect(beautiful.border_radius * 2)
+-- else
+--    beautiful.snap_shape = gears.shape.rectangle
+-- end
 
 -- mcabber notification profiles
 naughty.config.presets.msg = {
