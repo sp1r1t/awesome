@@ -566,6 +566,29 @@ client.connect_signal(
 )
 -- }}}
 
+-- Apply rounded corners to clients if needed
+if beautiful.border_radius and beautiful.border_radius > 0 then
+   note("rounding corners")
+   -- No rounded corners if there is only one client
+   screen.connect_signal(
+      "arrange",
+      function(s)
+         local only_one_tiled = #s.tiled_clients == 1
+         for _, c in pairs(s.clients) do
+            if (only_one_tiled or c.maximized or c.fullscreen) and not c.floating then
+               c.shape = gears.shape.rectangle
+            else
+               c.shape = rrect(beautiful.border_radius)
+            end
+         end
+      end
+   )
+
+   beautiful.snap_shape = rrect(beautiful.border_radius * 2)
+else
+   beautiful.snap_shape = gears.shape.rectangle
+end
+
 -- mcabber notification profiles
 naughty.config.presets.msg = {
    bg = "#000000",

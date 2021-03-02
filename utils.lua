@@ -1,4 +1,5 @@
 local naughty = require("naughty")
+local gears = require("gears")
 
 --- Prints a naughtify dialog without timeout (for debugging)
 function note(s)
@@ -22,4 +23,11 @@ end
 --- Colorize
 function col(text, color)
     return "<span color='#" .. color .. "'>" .. text .. "</span>"
+end
+
+--- Create rounded rectangle shape
+function rrect(radius)
+    return function(cr, width, height)
+        gears.shape.rounded_rect(cr, width, height, radius)
+    end
 end
