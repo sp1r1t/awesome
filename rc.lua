@@ -3,6 +3,7 @@ local gears = require("gears")
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
+require("utils")
 
 -- Widget and layout library
 local wibox = require("wibox")
@@ -69,18 +70,6 @@ end
 function col(text, color)
    return "<span color='#" .. color .. "'>" .. text .. "</span>"
 end
-
--- Prints a naughtify dialog without timeout (for debugging)
-function note(s)
-   naughty.notify(
-      {
-         preset = naughty.config.presets.debug,
-         title = "Test Suit",
-         text = tostring(s)
-      }
-   )
-end
---]]
 
 ---[[ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
