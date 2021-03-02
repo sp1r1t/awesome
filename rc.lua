@@ -66,11 +66,6 @@ do
    )
 end
 
----[[ Helper function definitions
-function col(text, color)
-   return "<span color='#" .. color .. "'>" .. text .. "</span>"
-end
-
 ---[[ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 --beautiful.init("/usr/share/awesome/themes/sky/theme.lua")

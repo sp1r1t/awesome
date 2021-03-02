@@ -18,3 +18,8 @@ function tsize(T)
     end
     return count
 end
+
+--- Colorize
+function col(text, color)
+    return "<span color='#" .. color .. "'>" .. text .. "</span>"
+end
