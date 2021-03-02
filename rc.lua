@@ -460,14 +460,6 @@ require("keybindings")
 --   also set client keybindings
 require("clientrules")
 
-function tsize(T)
-   local count = 0
-   for _ in pairs(T) do
-      count = count + 1
-   end
-   return count
-end
-
 -- If the next client is non floating it is returned.
 -- If the next client is floating, the next non floating client is returned.
 function nexttiledc(client)
