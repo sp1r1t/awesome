@@ -27,7 +27,7 @@ local vicious = require("vicious")
 --local filehandle = require("filehandle")
 
 -- Load configuration file
--- local config = require("config")
+local config = require("config")
 
 -- Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -405,6 +405,14 @@ for s = 1, screen.count() do
       "BAT0"
    )
 
+   -- Create a vicous battery widget
+   netwidget = wibox.widget.textbox()
+   vicious.register(
+      netwidget,
+      vicious.widgets.net,
+      " ↑${" .. config.netInterface .. " up_kb} ↓${" .. config.netInterface .. " down_kb} "
+   )
+
    -- Create the wibox
    mywibox[s] = awful.wibox({position = "top", screen = s})
 
@@ -423,6 +431,7 @@ for s = 1, screen.count() do
       right_layout:add(cpuwidget)
       right_layout:add(memwidget)
       right_layout:add(batwidget)
+      right_layout:add(netwidget)
       right_layout:add(mytextclock)
       right_layout:add(mylayoutbox[s])
    end
