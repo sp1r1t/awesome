@@ -681,6 +681,14 @@ globalkeys =
       function()
          awful.spawn("swkb.sh")
       end
+   ),
+   -- Paste primary selection
+   awful.key(
+      {modkey, "Control"},
+      "p",
+      function()
+         awful.spawn("paste-primary-selection.sh")
+      end
    )
 )
 
