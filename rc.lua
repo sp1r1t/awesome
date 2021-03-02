@@ -154,6 +154,8 @@ end
 
 swap_screens = function()
    local screencount = screen.count()
+   local mousecoords = mouse.coords()
+
    if (screencount == 2) then
       local tagActive = client.focus and client.focus.first_tag or nil
       local clientsActive = tagActive:clients()
@@ -175,6 +177,8 @@ swap_screens = function()
          for idx, client in pairs(clientsInactive) do
             client:move_to_screen()
          end
+
+         mouse.coords(mousecoords) -- keep mouse where it is
       end
    end
 end
