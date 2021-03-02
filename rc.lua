@@ -27,7 +27,7 @@ local vicious = require("vicious")
 --local filehandle = require("filehandle")
 
 -- Load configuration file
--- local config = require('config')
+-- local config = require("config")
 
 -- Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -393,8 +393,12 @@ for s = 1, screen.count() do
          else
             color = color_limit_
          end
-         output = output .. col(bat, color) .. ", " .. col(time, color)
 
+         if bat > 0 then
+            output = output .. col(bat, color) .. ", " .. col(time, color)
+         else
+            output = ""
+         end
          return output
       end,
       10,
