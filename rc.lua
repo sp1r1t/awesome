@@ -432,14 +432,16 @@ for s = 1, screen.count() do
 
    -- Widgets that are aligned to the right
    local right_layout = wibox.layout.fixed.horizontal()
+
+   -- Add info widgets only to main screen
    if s == 1 then
       right_layout:add(wibox.widget.systray())
+      right_layout:add(cpuwidget)
+      right_layout:add(memwidget)
+      right_layout:add(batwidget)
+      right_layout:add(mytextclock)
+      right_layout:add(mylayoutbox[s])
    end
-   right_layout:add(cpuwidget)
-   right_layout:add(memwidget)
-   right_layout:add(batwidget)
-   right_layout:add(mytextclock)
-   right_layout:add(mylayoutbox[s])
 
    -- Now bring it all together (with the tasklist in the middle)
    local layout = wibox.layout.align.horizontal()
