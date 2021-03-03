@@ -420,7 +420,42 @@ for s = 1, screen.count() do
       "BAT0"
    )
 
-   -- Create a vicous weather widget
+   -- Create a vicous notmuch widget
+   notmuchwidget = wibox.widget.textbox()
+   vicious.register(
+      notmuchwidget,
+      vicious.widgets.notmuch,
+      function(widget, args)
+         return tostring(args.count)
+      end,
+      1000,
+      "tag:unread"
+   )
+   notmuchicon = wibox.widget.imagebox("/home/jinn/.config/awesome/icons/mail.png")
+   notmuchicon:connect_signal(
+      "button::press",
+      function(c)
+         local notmuchrunning = false
+         for s = 1, screen.count() do
+            for k, c in pairs(screen[s].all_clients) do
+               if c.name == "notmuch" then
+                  notmuchrunning = true
+                  awful.tag.viewtoggle(c.first_tag)
+               end
+            end
+         end
+         if not notmuchrunning then
+            awful.spawn(
+               "emacs -f notmuch",
+               {
+                  name = "notmuch"
+               }
+            )
+         end
+      end
+   )
+
+   -- Create a vicous net widget
    netwidget = wibox.widget.textbox()
    vicious.register(
       netwidget,
@@ -460,6 +495,8 @@ for s = 1, screen.count() do
       right_layout:add(memwidget)
       right_layout:add(batwidget)
       right_layout:add(netwidget)
+      right_layout:add(notmuchicon)
+      right_layout:add(notmuchwidget)
       right_layout:add(weatherwidget)
       right_layout:add(mytextclock)
    end
