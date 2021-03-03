@@ -1,6 +1,7 @@
 ---------------------------
 --    Easy Rise Theme    --
 ---------------------------
+config = require("../config")
 
 theme = {}
 
@@ -95,8 +96,8 @@ theme.titlebar_maximized_button_focus_active = "/usr/share/awesome/themes/defaul
 --theme.wallpaper = "/home/jinn/medien/pix/walls/1432698902716.jpg"
 --theme.wallpaper = "/home/jinn/medien/pix/walls/1432452362423.jpg"
 --theme.wallpaper = "/home/jinn/medien/pix/walls/1432686359104.jpg"
-theme.wallpaper = "~/.walls/appa.jpg"
-theme.wallpaper_vertical = "~/.walls/moon_vertical.png"
+theme.wallpaper = config.home .. ".walls/appa.jpg"
+theme.wallpaper_vertical = config.home .. ".walls/moon_vertical.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
@@ -117,6 +118,9 @@ theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
+
+theme.icon = {}
+theme.icon.mail = config.home .. ".config/awesome/icons/mail.png"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80

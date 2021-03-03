@@ -431,7 +431,7 @@ for s = 1, screen.count() do
       1000,
       "tag:unread"
    )
-   notmuchicon = wibox.widget.imagebox("/home/jinn/.config/awesome/icons/mail.png")
+   notmuchicon = wibox.widget.imagebox(beautiful.icon.mail)
    notmuchicon:connect_signal(
       "button::press",
       function(c)
