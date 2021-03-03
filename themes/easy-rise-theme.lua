@@ -1,39 +1,50 @@
 ---------------------------
 --    Easy Rise Theme    --
 ---------------------------
-config = require("../config")
+local config = require("../config")
 
 theme = {}
 
 theme.font = "sans mono 18"
 
-theme.bg_normal = "#dddddd"
---theme.bg_focus      = "#535d6c"
-theme.bg_focus = "#8BB38B" --AD9EE8"
-theme.bg_urgent = "#E04F4F"
-theme.bg_minimize = "#444444"
+theme.bg_normal = "#F6F8FD"
+theme.fg_normal = "#214697"
+
+theme.bg_focus = "#03A062" -- #8CDE67" -- "#826CDF"
+theme.fg_focus = theme.bg_normal
+
+theme.bg_urgent = "#EF946C"
+theme.fg_urgent = "#dddddd"
+
+theme.bg_minimize = "#b6aefd" -- #A3C3D9"
+theme.fg_minimize = "#0f0283" -- "#214697"
+
 theme.bg_systray = theme.bg_normal
 
-theme.fg_normal = "#777777"
-theme.fg_focus = "#222222"
-theme.fg_urgent = "#dddddd"
-theme.fg_minimize = "#dddddd"
-
-theme.border_width = 2
 theme.border_normal = "#333333"
-theme.border_focus = "#50DE50"
-theme.border_radius = 12
---0FBA0F"
+theme.border_focus = theme.bg_focus
+theme.border_width = 3
 theme.border_marked = "#91231c"
 
+theme.taglist_fg = theme.fg_focus
+theme.taglist_bg_empty = "#D1DDF5"
+theme.taglist_bg_occupied = "#678CDE"
+
+theme.taglist_bg_hover = theme.fg_normal
+
+--theme.taglist_fg_empty = "#cccccc"
+--theme.taglist_fg_occupied = "#A2E3C4"
+
+-- theme.taglist_circle = "#f9b3a0"
+
 -- Status colors (cpu, mem, net use)
-color_relax = "#33BD06" -- "#83ff73"
-color_walk = "#DBC900" -- "#ffff33"
+color_relax = "#33BD06"
+color_walk = "#DBC900"
 color_run = "#ff7633"
 color_limit = "#ff0000"
 
-color_relax_ = "33BD06" -- "#83ff73"
-color_walk_ = "DBC900" -- "#ffff33"
+color_relax_ = "33BD06"
+color_walk_ = "DBC900"
 color_run_ = "ff7633"
 color_limit_ = "ff0000"
 
@@ -50,8 +61,8 @@ color_limit_ = "ff0000"
 --theme.tasklist_bg_focus = "#ff0000"
 
 -- Display the taglist squares
-theme.taglist_squares_sel = "/usr/share/awesome/themes/default/taglist/squarefw.png"
-theme.taglist_squares_unsel = "/usr/share/awesome/themes/default/taglist/squarew.png"
+-- theme.taglist_squares_sel = "/usr/share/awesome/themes/default/taglist/squarefw.png"
+-- theme.taglist_squares_unsel = "/usr/share/awesome/themes/default/taglist/squarew.png"
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]

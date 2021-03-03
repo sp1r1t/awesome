@@ -98,7 +98,7 @@ require("layouts")
 tags = {}
 
 -- individual tag settings
-names = {" `", " 1", " 2", " 3", " 4", "5", "6", "7", "8", "9", "0", "-", "=", "<-"}
+tagnames = {" `", " 1", " 2", " 3", " 4", "5", "6", "7", "8", "9", "0", "-", "=", "<-"}
 -- names = {"", "", "", "", "", ""};
 icons = {
    "world.svg",
@@ -130,7 +130,7 @@ for s = 1, screen.count() do
       end
    end
 
-   for t = 1, #names do
+   for t = 1, #tagnames do
       options = {
          layout = layout(s),
          icon = icons[t] and config.iconPath .. icons[t],
@@ -140,7 +140,7 @@ for s = 1, screen.count() do
          selected = t == 1 or false
       }
 
-      tags[s][t] = awful.tag.add(names[t], options)
+      tags[s][t] = awful.tag.add(tagnames[t], options)
    end
 end
 
@@ -342,10 +342,169 @@ for s = 1, screen.count() do
    )
 
    -- Create a taglist widget
-   mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
+   mytaglist[s] =
+      awful.widget.taglist(
+      {
+         screen = s,
+         filter = awful.widget.taglist.filter.all,
+         style = {
+            shape = gears.shape.rounded_rect
+         },
+         layout = {
+            spacing = 10,
+            spacing_widget = {
+               color = beautiful.bg_systray,
+               shape = gears.shape.rounded_rect,
+               widget = wibox.widget.separator
+            },
+            layout = wibox.layout.fixed.horizontal
+         },
+         widget_template = {
+            {
+               {
+                  {
+                     {
+                        {
+                           id = "index_role",
+                           valign = "center",
+                           align = "left",
+                           widget = wibox.widget.textbox
+                        },
+                        left = 5,
+                        right = 5,
+                        widget = wibox.container.margin
+                     },
+                     bg = beautiful.taglist_circle,
+                     shape = gears.shape.circle,
+                     widget = wibox.container.background
+                  },
+                  {
+                     {
+                        id = "icon_role",
+                        widget = wibox.widget.imagebox
+                     },
+                     margins = 2,
+                     widget = wibox.container.margin
+                  },
+                  -- {
+                  --    id = "text_role",
+                  --    widget = wibox.widget.textbox
+                  -- },
+                  layout = wibox.layout.fixed.horizontal
+               },
+               left = 18,
+               right = 18,
+               top = 5,
+               bottom = 5,
+               widget = wibox.container.margin
+            },
+            id = "background_role",
+            widget = wibox.container.background,
+            -- Add support for hover colors and an index label
+            create_callback = function(self, c3, index, objects) --luacheck: no unused args
+               self:get_children_by_id("index_role")[1].markup =
+                  "<b><span  color='" .. beautiful.taglist_fg .. "'>" .. tagnames[index] .. "</span></b>"
+               self:connect_signal(
+                  "mouse::enter",
+                  function()
+                     if self.bg ~= beautiful.taglist_bg_hover then
+                        self.backup = self.bg
+                        self.backup_original = self.bg
+                        self.has_backup = true
+                     end
+                     self.bg = beautiful.taglist_bg_hover
+                  end
+               )
+               self:connect_signal(
+                  "mouse::leave",
+                  function()
+                     if self.has_backup then
+                        self.bg = self.backup
+                        self.has_backup = false
+                     end
+                  end
+               )
+               self:connect_signal(
+                  "button::press",
+                  function(widget, x, y, button)
+                     if button == 1 then
+                        if self.backup == gears.color(beautiful.bg_focus) then
+                           self.backup = self.backup_original
+                        else
+                           self.backup = beautiful.bg_focus
+                        end
+                     end
+                     if button == 3 then
+                        self.has_backup = false
+                     end
+                  end
+               )
+            end,
+            update_callback = function(self, c3, index, objects) --luacheck: no unused args
+               self:get_children_by_id("index_role")[1].markup =
+                  "<b><span  color='" .. beautiful.taglist_fg .. "'>" .. tagnames[index] .. "</span></b>"
+            end
+         },
+         buttons = mytaglist.buttons
+      }
+   )
 
    -- Create a tasklist widget
-   mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
+   mytasklist[s] =
+      awful.widget.tasklist {
+      screen = s,
+      filter = awful.widget.tasklist.filter.currenttags,
+      buttons = mytasklist.buttons,
+      style = {
+         shape_border_width = 1,
+         shape_border_color = "#777777",
+         shape = gears.shape.rounded_bar
+      },
+      layout = {
+         spacing = 15,
+         spacing_widget = {
+            {
+               forced_width = 5,
+               shape = gears.shape.circle,
+               widget = wibox.widget.separator
+            },
+            valign = "center",
+            halign = "center",
+            widget = wibox.container.place
+         },
+         layout = wibox.layout.flex.horizontal
+      },
+      -- Notice that there is *NO* wibox.wibox prefix, it is a template,
+      -- not a widget instance.
+      widget_template = {
+         {
+            {
+               {
+                  {
+                     id = "icon_role",
+                     widget = wibox.widget.imagebox
+                  },
+                  top = 1,
+                  bottom = 4,
+                  right = 5,
+                  widget = wibox.container.margin
+               },
+               {
+                  id = "text_role",
+                  widget = wibox.widget.textbox
+               },
+               layout = wibox.layout.fixed.horizontal
+            },
+            left = 10,
+            right = 10,
+            top = 4,
+            widget = wibox.container.margin
+         },
+         id = "background_role",
+         widget = wibox.container.background
+      }
+   }
+   --   awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
    -- Create a vicious mem usage widget
    memwidget = wibox.widget.textbox()
@@ -439,6 +598,7 @@ for s = 1, screen.count() do
       100,
       "tag:unread"
    )
+
    notmuchicon = wibox.widget.imagebox(beautiful.icon.mail)
    notmuchicon:connect_signal(
       "button::press",
@@ -486,7 +646,7 @@ for s = 1, screen.count() do
 
    -- Create the wibox
    mywibox[s] =
-      awful.wibox({position = "top", screen = s, border_width = "0", border_color = beautiful.bg_normal, height = 30})
+      awful.wibox({position = "top", screen = s, border_width = "5", border_color = beautiful.bg_normal, height = 35})
 
    -- Widgets that are aligned to the left
    local left_layout = wibox.layout.fixed.horizontal()
@@ -521,7 +681,7 @@ for s = 1, screen.count() do
 
    -- bottom tasklist
    mywibox_bottom = {}
-   mywibox_bottom[s] = awful.wibox({position = "bottom", screen = s, height = 30})
+   mywibox_bottom[s] = awful.wibox({position = "bottom", screen = s, height = 30, bg = "##"})
    mywibox_bottom[s]:set_widget(mytasklist[s])
 end
 -- }}}
