@@ -120,7 +120,7 @@ theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
 theme.icon_theme = nil
 
 theme.icon = {}
-theme.icon.mail = config.home .. ".config/awesome/icons/mail.png"
+theme.icon.mail = config.iconPath .. "mail.png"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
