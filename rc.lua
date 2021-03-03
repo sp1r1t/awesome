@@ -103,10 +103,18 @@ names = {" `", " 1", " 2", " 3", " 4", "5", "6", "7", "8", "9", "0", "-", "=", "
 icons = {
    "world.svg",
    "coding64.png",
-   "edit64.png"
-   -- "coding64.png",
-   -- "tiger64.png",
-   -- "music64.png"
+   "edit64.png",
+   "terminal.png",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "mail.png",
+   "",
+   "",
+   ""
 }
 
 for s = 1, screen.count() do
@@ -428,7 +436,7 @@ for s = 1, screen.count() do
       function(widget, args)
          return tostring(args.count)
       end,
-      1000,
+      100,
       "tag:unread"
    )
    notmuchicon = wibox.widget.imagebox(beautiful.icon.mail)
@@ -448,7 +456,8 @@ for s = 1, screen.count() do
             awful.spawn(
                "emacs -f notmuch",
                {
-                  name = "notmuch"
+                  name = "notmuch",
+                  tag = screen[1].tags[11]
                }
             )
          end
