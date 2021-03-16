@@ -255,7 +255,7 @@ globalkeys =
 globalkeys = awful.util.table.join(globalkeys, ror.genkeys(modkey))
 
 -- add tag key bindings for 13 tags.
-local keys = {"#49", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "#20", "#21", "#22"}
+local keys = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
 for i = 1, 14 do
     globalkeys =
         awful.util.table.join(

@@ -98,7 +98,7 @@ require("layouts")
 tags = {}
 
 -- individual tag settings
-tagnames = {" `", " 1", " 2", " 3", " 4", "5", "6", "7", "8", "9", "0", "-", "=", "<-"}
+tagnames = {" 1", " 2", " 3", " 4", "5", "6", "7", "8", "9", "0"}
 -- names = {"", "", "", "", "", ""};
 icons = {
    "world.svg",
@@ -110,11 +110,7 @@ icons = {
    "",
    "",
    "",
-   "",
-   "mail.png",
-   "",
-   "",
-   ""
+   "mail.png"
 }
 
 for s = 1, screen.count() do
