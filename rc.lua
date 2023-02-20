@@ -664,8 +664,8 @@ for s = 1, screen.count() do
       right_layout:add(memwidget)
       right_layout:add(batwidget)
       right_layout:add(netwidget)
-      right_layout:add(notmuchicon)
-      right_layout:add(notmuchwidget)
+      -- right_layout:add(notmuchicon)
+      -- right_layout:add(notmuchwidget)
       right_layout:add(weatherwidget)
       right_layout:add(mytextclock)
    end

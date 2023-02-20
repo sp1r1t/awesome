@@ -117,7 +117,7 @@ globalkeys =
             awful.spawn(terminal)
         end
     ),
-    awful.key({modkey, "Control"}, "r", awesome.restart),
+    awful.key({modkey}, "r", awesome.restart),
     awful.key({modkey, "Shift"}, "q", awesome.quit),
     awful.key(
         {modkey},
@@ -219,7 +219,7 @@ globalkeys =
         {modkey},
         "e",
         function()
-            note("opening in ff")
+            note("Opening in ff")
             awful.spawn("open_primary_selection_in_ff.sh")
         end
     ),
