@@ -19,9 +19,9 @@ table5 = {
    -- ["Control-j"]={"xterm -title jabber -e mcabber", "jabber", "name"},
 
    ["o"] = {"emacsclient -c", "Emacs", "class"},
-   ["Shift-o"] = {"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
-   ["Control-o"] = {"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
-   ["t"] = {"xterm", "xterm", "instance"},
+   -- ["Shift-o"] = {"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
+   -- ["Control-o"] = {"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
+   ["t"] = {"gnome-terminal", "Gnome-terminal", "instance"},
    ["u"] = {"nemo", "Nemo", "class"},
    ["y"] = {"evince", "Evince", "class"}
    -- ["z"]={"evince", "Evince", "class"},

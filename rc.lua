@@ -82,6 +82,9 @@ require("wallpaper")
 -- start composition manager
 --awful.spawn_with_shell("xcompmgr -cF &")
 
+-- Setup screens
+awful.util.spawn_with_shell("~/.config/awesome/scripts/screensetup.sh")
+
 -- This is used later as the default terminal and editor to run.
 terminal = "uxterm"
 editor = os.getenv("EDITOR") or "nano"
@@ -98,7 +101,7 @@ require("layouts")
 tags = {}
 
 -- individual tag settings
-tagnames = {" `", " 1", " 2", " 3", " 4", "5", "6", "7", "8", "9", "0", "-", "=", "<-"}
+tagnames = {"1", " 2", " 3", " 4", "5", "6", "7", "8", "9", "0"}
 -- names = {"", "", "", "", "", ""};
 icons = {
    "world.svg",
@@ -112,9 +115,6 @@ icons = {
    "",
    "",
    "mail.png",
-   "",
-   "",
-   ""
 }
 
 for s = 1, screen.count() do
@@ -907,14 +907,11 @@ autorun = true
 
 autorunApps = {
    "dropbox",
-   "barrier",
+   -- "barrier",
    "emacs --daemon"
    -- "/usr/bin/bash " .. config.home .. ".xinitrc",
    -- "firefox",
    -- "code"
-   --      "dropbox",
-   --      "barrier",
-   -- "emacs --daemon",
 }
 
 if autorun then
@@ -925,3 +922,6 @@ if autorun then
       }
    end
 end
+
+
+awful.util.spawn_with_shell("~/.config/awesome/scripts/autorun.sh")
