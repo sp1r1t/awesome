@@ -20,9 +20,6 @@ naughty.config.defaults.icon_size = 50
 
 local menubar = require("menubar")
 
--- Aweror
-local aweror = require("./aweror")
-
 -- Vicious
 local vicious = require("vicious")
 
@@ -218,14 +215,8 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mytextclock = awful.widget.textclock()
 mytextclock:connect_signal(
    "button::press",
-   function(c)
-      naughty.notify ({
-            preset = naughty.config.presets.msg,
-            icon = "chat_msg_recv",
-            text = awful.util.escape("Date clicked"),
-            title = "Hohoho"
-      })
-      aweror.run_or_raise("thunderbird", { "Thunderbird", "class" })
+   function()
+      local client = awful.spawn.raise_or_spawn('thunderbird', {class = 'thunderbird'})
    end
 )
 

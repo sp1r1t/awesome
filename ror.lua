@@ -31,5 +31,5 @@ table5 = {
    -- ['\\']={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
    -- ["#"]={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
 
-   [","] = {"thunderbird", "Thunderbird", "class"}
+   [","] = {"thunderbird", "thunderbird", "class"}
 }
