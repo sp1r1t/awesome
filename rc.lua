@@ -4,6 +4,7 @@ local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
 require("utils")
+require("helper")
 
 -- Widget and layout library
 local wibox = require("wibox")
@@ -514,6 +515,7 @@ for s = 1, screen.count() do
    }
    --   awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
+
    -- Create a vicious mem usage widget
    memwidget = wibox.widget.textbox()
    vicious.register(
@@ -523,13 +525,13 @@ for s = 1, screen.count() do
          local output = "M: "
          local m = args[1]
          if m > 90 then
-            output = output .. "<span color='" .. color_limit .. "'>" .. m .. "</span>"
+            output = output .. "<span color='" .. color_limit .. "'>" .. lpad(m, 3) .. "</span>"
          elseif m > 50 then
-            output = output .. "<span color='" .. color_run .. "'>" .. m .. "</span>"
+            output = output .. "<span color='" .. color_run .. "'>" .. lpad(m, 3) .. "</span>"
          elseif m > 30 then
-            output = output .. "<span color='" .. color_walk .. "'>" .. m .. "</span>"
+            output = output .. "<span color='" .. color_walk .. "'>" .. lpad(m, 3) .. "</span>"
          else
-            output = output .. "<span color='" .. color_relax .. "'>" .. m .. "</span>"
+            output = output .. "<span color='" .. color_relax .. "'>" .. lpad(m, 3) .. "</span>"
          end
          output = output .. "%  "
          return output
@@ -547,13 +549,13 @@ for s = 1, screen.count() do
          for i, c in pairs(args) do
             if i == 1 then
             elseif c > 90 then
-               output = output .. "<span color='" .. color_limit .. "'>" .. c .. "</span> "
+               output = output .. "<span color='" .. color_limit .. "'>" .. lpad(c, 3) .. "</span> "
             elseif c > 50 then
-               output = output .. "<span color='" .. color_run .. "'>" .. c .. "</span> "
+               output = output .. "<span color='" .. color_run .. "'>" .. lpad(c, 3)  .. "</span> "
             elseif c > 30 then
-               output = output .. "<span color='" .. color_walk .. "'>" .. c .. "</span> "
+               output = output .. "<span color='" .. color_walk .. "'>" .. lpad(c, 3) .. "</span> "
             else
-               output = output .. "<span color='" .. color_relax .. "'>" .. c .. "</span> "
+               output = output .. "<span color='" .. color_relax .. "'>" .. lpad(c, 3) .. "</span> "
             end
          end
          output = output .. "  "
