@@ -5,7 +5,7 @@ local config = require("../config")
 
 theme = {}
 
-theme.font = "sans mono 14"
+theme.font = " NotoSansMono Nerd Font 14"
 
 theme.bg_normal = "#080C18"
 theme.fg_normal = "#F0F2FA"
