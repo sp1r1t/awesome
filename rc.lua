@@ -20,6 +20,9 @@ naughty.config.defaults.icon_size = 50
 
 local menubar = require("menubar")
 
+-- Aweror
+local aweror = require("./aweror")
+
 -- Vicious
 local vicious = require("vicious")
 
@@ -213,6 +216,19 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
+mytextclock:connect_signal(
+   "button::press",
+   function(c)
+      naughty.notify ({
+            preset = naughty.config.presets.msg,
+            icon = "chat_msg_recv",
+            text = awful.util.escape("Date clicked"),
+            title = "Hohoho"
+      })
+      aweror.run_or_raise("thunderbird", { "Thunderbird", "class" })
+   end
+)
+
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -654,11 +670,16 @@ for s = 1, screen.count() do
    left_layout:add(mytaglist[s])
    left_layout:add(mypromptbox[s])
 
+   -- Widgets that are aligned to the center
+   local center_layout = wibox.layout.align.horizontal()
+   center_layout.expand = "outside"
+
    -- Widgets that are aligned to the right
    local right_layout = wibox.layout.fixed.horizontal()
 
    -- Add info widgets only to primary screen
    if screen[s] == screen.primary then
+      center_layout:set_middle(mytextclock)
       right_layout:add(wibox.widget.systray())
       right_layout:add(cpuwidget)
       right_layout:add(memwidget)
@@ -667,14 +688,13 @@ for s = 1, screen.count() do
       -- right_layout:add(notmuchicon)
       -- right_layout:add(notmuchwidget)
       right_layout:add(weatherwidget)
-      right_layout:add(mytextclock)
    end
    right_layout:add(mylayoutbox[s])
 
    -- Now bring it all together
    local layout = wibox.layout.align.horizontal()
    layout:set_left(left_layout)
-   -- layout:set_middle(mytasklist[s])
+   layout:set_middle(center_layout)
    layout:set_right(right_layout)
 
    mywibox[s]:set_widget(layout)

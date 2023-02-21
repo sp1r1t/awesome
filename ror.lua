@@ -23,7 +23,7 @@ table5 = {
    -- ["Control-o"] = {"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
    ["t"] = {"gnome-terminal", "Gnome-terminal", "instance"},
    ["u"] = {"nemo", "Nemo", "class"},
-   ["y"] = {"evince", "Evince", "class"}
+   ["y"] = {"evince", "Evince", "class"},
    -- ["z"]={"evince", "Evince", "class"},
 
    -- ["["]={"xterm -title irssi -e irssi", "irssi", "name"},
@@ -31,5 +31,5 @@ table5 = {
    -- ['\\']={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
    -- ["#"]={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
 
-   -- [","]={"thunderbird", "Thunderbird", "class"}
+   [","] = {"thunderbird", "Thunderbird", "class"}
 }
