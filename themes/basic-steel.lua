@@ -1,5 +1,5 @@
 ---------------------------
---    Easy Rise Theme    --
+--   Basic Steel Theme   --
 ---------------------------
 local config = require("../config")
 

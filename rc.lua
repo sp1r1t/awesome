@@ -70,9 +70,10 @@ end
 -- Themes define colours, icons, font and wallpapers.
 --beautiful.init("/usr/share/awesome/themes/sky/theme.lua")
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
-beautiful.init("~/.config/awesome/themes/easy-rise-theme.lua")
 --beautiful.init("~/.config/awesome/themes/done-and-there.lua")
+-- beautiful.init("~/.config/awesome/themes/easy-rise-theme.lua")
 --beautiful.init("~/.config/awesome/themes/ghost-theme.lua")
+beautiful.init("~/.config/awesome/themes/basic-steel.lua")
 
 -- App folders define where the menubar (strg+p) searches for applications
 app_folders = {"/usr/share/applications/", "~/.local/share/applications/", "~/skripte", "~/.bin", "~/bin"}
