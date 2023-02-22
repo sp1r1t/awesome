@@ -220,7 +220,7 @@ globalkeys =
         "e",
         function()
             note("Opening in ff")
-            awful.spawn("open_primary_selection_in_ff.sh")
+            awful.util.spawn_with_shell("open_primary_selection_in_ff.sh")
         end
     ),
     -- Switch keyboard layout
