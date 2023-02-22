@@ -110,7 +110,7 @@ require("layouts")
 tags = {}
 
 -- individual tag settings
-tagnames = {"1", " 2", " 3", " 4", "5", "6", "7", "8", "9", "0"}
+tagnames = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}
 -- names = {"", "", "", "", "", ""};
 icons = {
    "world.svg",
@@ -927,19 +927,36 @@ end
 autorun = true
 
 autorunApps = {
-   "dropbox",
+   {"dropbox", { class = ""}},
    -- "barrier",
-   "emacs --daemon"
+   -- "emacs --daemon"
    -- "/usr/bin/bash " .. config.home .. ".xinitrc",
-   -- "firefox",
+   {"firefox", { class = "firefox"}},
+   {"kdeconnect-app", { class = "kdeconnect.app" }},
+   {"kdeconnect-sms", { class = "kdeconnect.sms" }},
    -- "code"
 }
 
 if autorun then
-   for app = 1, #autorunApps do
-      awful.spawn.once(autorunApps[app], nil, nil, nil)
+   for index = 1, #autorunApps do
+      local app = autorunApps[index]
+      local rules = { class = "" }
+      if type(app) == "table" then
+         rules = app[2]
+         app = app[1]
+      end
+
+      awful.spawn.single_instance(app, awful.rules.rules,
+                                  function (c)
+                                     if c.class == rules.class then
+                                        return true
+                                     end
+                                     return false
+                                  end,
+                                  nil      )
+
       naughty.notify {
-         text = autorunApps[app] .. " started"
+         text = app .. " started "
       }
    end
 end
