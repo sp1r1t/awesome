@@ -23,11 +23,30 @@ awful.rules.rules = {
         floating = true,
       },
     },
+    {
+      rule = { class = "kdeconnect.app" },
+      properties = {
+        tag = "0",
+        screen = 2
+      }
+    },
+    {
+      rule = { class = "kdeconnect.sms" },
+      properties = {
+        tag = "0",
+        screen = 2
+      }
+    },
+    {
+      rule = { class = "firefox" },
+      properties = {
+        tag = "1",
+        screen = 1
+      }
+    },
     -- { rule = { class = "emacs" },
       -- properties = { tag = tags[1][3], switchtotag=true } },
 
-      -- { rule = { class = "firefox" },
-      -- properties = { tag = tags[1][2], swtichtotag=true} },
 
       -- { rule = { class = "code" },
       -- properties = { tag = tags[2][4], swtichtotag=true} },
