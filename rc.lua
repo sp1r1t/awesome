@@ -67,8 +67,6 @@ do
    )
 end
 
--- Autostart
-awful.spawn.with_shell("picom")
 
 ---[[ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
@@ -79,10 +77,16 @@ awful.spawn.with_shell("picom")
 --beautiful.init("~/.config/awesome/themes/ghost-theme.lua")
 beautiful.init("~/.config/awesome/themes/basic-steel.lua")
 
+-- Autostart
+awful.spawn.with_shell("picom")
+
+-- Wallpaper
+awful.spawn.with_shell("nitrogen --restore")
+-- require("wallpaper")
+
 -- App folders define where the menubar (strg+p) searches for applications
 app_folders = {"/usr/share/applications/", "~/.local/share/applications/", "~/skripte", "~/.bin", "~/bin"}
 
-require("wallpaper")
 
 -- start composition manager
 --awful.spawn_with_shell("xcompmgr -cF &")
@@ -528,13 +532,13 @@ for s = 1, screen.count() do
          local output = "M: "
          local m = args[1]
          if m > 90 then
-            output = output .. "<span color='" .. color_limit .. "'>" .. lpad(m, 3) .. "</span>"
+            output = output .. "<span color='" .. color_limit .. "'>" .. lpad(m, 2) .. "</span>"
          elseif m > 50 then
-            output = output .. "<span color='" .. color_run .. "'>" .. lpad(m, 3) .. "</span>"
+            output = output .. "<span color='" .. color_run .. "'>" .. lpad(m, 2) .. "</span>"
          elseif m > 30 then
-            output = output .. "<span color='" .. color_walk .. "'>" .. lpad(m, 3) .. "</span>"
+            output = output .. "<span color='" .. color_walk .. "'>" .. lpad(m, 2) .. "</span>"
          else
-            output = output .. "<span color='" .. color_relax .. "'>" .. lpad(m, 3) .. "</span>"
+            output = output .. "<span color='" .. color_relax .. "'>" .. lpad(m, 2) .. "</span>"
          end
          output = output .. "%  "
          return output
