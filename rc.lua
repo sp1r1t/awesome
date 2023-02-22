@@ -67,6 +67,9 @@ do
    )
 end
 
+-- Autostart
+awful.spawn.with_shell("picom")
+
 ---[[ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 --beautiful.init("/usr/share/awesome/themes/sky/theme.lua")
