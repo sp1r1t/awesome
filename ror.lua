@@ -22,7 +22,7 @@ table5 = {
    -- ["Shift-o"] = {"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
    -- ["Control-o"] = {"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
    ["t"] = {"gnome-terminal", "Gnome-terminal", "class"},
-   ["u"] = {"nemo", "Nemo", "class"},
+   ["u"] = {"nautilus", "org.gnome.Nautilus", "class"},
    ["y"] = {"evince", "Evince", "class"},
    -- ["z"]={"evince", "Evince", "class"},
 
