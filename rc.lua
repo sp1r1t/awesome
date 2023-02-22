@@ -77,6 +77,9 @@ end
 --beautiful.init("~/.config/awesome/themes/ghost-theme.lua")
 beautiful.init("~/.config/awesome/themes/basic-steel.lua")
 
+-- Setup screens
+awful.spawn.with_shell("~/.config/awesome/scripts/screensetup.sh")
+
 -- Autostart
 awful.spawn.with_shell("picom")
 
@@ -91,12 +94,10 @@ app_folders = {"/usr/share/applications/", "~/.local/share/applications/", "~/sk
 -- start composition manager
 --awful.spawn_with_shell("xcompmgr -cF &")
 
--- Setup screens
-awful.util.spawn_with_shell("~/.config/awesome/scripts/screensetup.sh")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "gnome-terminal"
-editor = os.getenv("EDITOR") or "nano"
+editor = os.getenv("EDITOR") or "emacsclient -c"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -928,8 +929,8 @@ autorun = true
 
 autorunApps = {
    {"dropbox", { class = ""}},
-   -- "barrier",
-   -- "emacs --daemon"
+   {"guake --hide", {class = "Guake"}},
+   -- {"emacsclient -c", { class = "Emacs" }},
    -- "/usr/bin/bash " .. config.home .. ".xinitrc",
    {"firefox", { class = "firefox"}},
    {"kdeconnect-app", { class = "kdeconnect.app" }},
@@ -946,14 +947,11 @@ if autorun then
          app = app[1]
       end
 
-      awful.spawn.single_instance(app, awful.rules.rules,
-                                  function (c)
-                                     if c.class == rules.class then
-                                        return true
-                                     end
-                                     return false
-                                  end,
-                                  nil      )
+      local matcher = function (c)
+         return awful.rules.match(c, rules)
+      end,
+
+      awful.spawn.single_instance(app, awful.rules.rules, matcher, nil)
 
       naughty.notify {
          text = app .. " started "
