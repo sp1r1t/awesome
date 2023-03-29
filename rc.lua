@@ -682,7 +682,6 @@ for s = 1, screen.count() do
    -- Add info widgets only to primary screen
    if screen[s] == screen.primary then
       center_layout:set_middle(mytextclock)
-      right_layout:add(wibox.widget.systray())
       right_layout:add(cpuwidget)
       right_layout:add(memwidget)
       right_layout:add(batwidget)
@@ -690,6 +689,7 @@ for s = 1, screen.count() do
       -- right_layout:add(notmuchicon)
       -- right_layout:add(notmuchwidget)
       right_layout:add(weatherwidget)
+      right_layout:add(wibox.widget.systray())
    end
    right_layout:add(mylayoutbox[s])
 
