@@ -44,6 +44,14 @@ awful.rules.rules = {
         screen = 1
       }
     },
+    {
+      rule = { class = "thunderbird" },
+      properties = {
+        tag = "1",
+        screen = 2
+      }
+    },
+
     -- { rule = { class = "emacs" },
       -- properties = { tag = tags[1][3], switchtotag=true } },
 

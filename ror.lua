@@ -31,5 +31,6 @@ table5 = {
    -- ['\\']={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
    -- ["#"]={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
 
-   [","] = {"thunderbird", "thunderbird", "class"}
+   [","] = {"thunderbird", "thunderbird", "class"},
+   ["."] = {"thunderbird -compose", "Msgcompose", "class"} -- always opens a new one
 }
