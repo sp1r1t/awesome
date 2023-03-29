@@ -81,7 +81,7 @@ beautiful.init("~/.config/awesome/themes/basic-steel.lua")
 awful.spawn.with_shell("~/.config/awesome/scripts/screensetup.sh")
 
 -- Autostart
-awful.spawn.with_shell("picom")
+-- awful.spawn.with_shell("picom")
 
 -- Wallpaper
 awful.spawn.with_shell("nitrogen --restore")
@@ -925,39 +925,4 @@ function mcabber_event_hook(kind, direction, jid, msg)
 end
 
 -- Autorun programs
-autorun = true
-
-autorunApps = {
-   {"dropbox", { class = ""}},
-   {"guake --hide", {class = "Guake"}},
-   -- {"emacsclient -c", { class = "Emacs" }},
-   -- "/usr/bin/bash " .. config.home .. ".xinitrc",
-   {"firefox", { class = "firefox"}},
-   {"kdeconnect-app", { class = "kdeconnect.app" }},
-   {"kdeconnect-sms", { class = "kdeconnect.sms" }},
-   -- "code"
-}
-
-if autorun then
-   for index = 1, #autorunApps do
-      local app = autorunApps[index]
-      local rules = { class = "" }
-      if type(app) == "table" then
-         rules = app[2]
-         app = app[1]
-      end
-
-      local matcher = function (c)
-         return awful.rules.match(c, rules)
-      end,
-
-      awful.spawn.single_instance(app, awful.rules.rules, matcher, nil)
-
-      naughty.notify {
-         text = app .. " started "
-      }
-   end
-end
-
-
 awful.util.spawn_with_shell("~/.config/awesome/scripts/autorun.sh")
