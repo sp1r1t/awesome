@@ -114,7 +114,9 @@ globalkeys =
         {modkey, "Shift"},
         "Return",
         function()
-            awful.spawn(terminal)
+            awful.spawn(terminal, {
+                            screen = mouse.screen
+            })
         end
     ),
     awful.key({modkey}, "r", awesome.restart),

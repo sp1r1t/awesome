@@ -60,7 +60,9 @@ function aweror.run_or_raise(cmd, properties)
       c:raise()
       return
    end
-   awful.util.spawn(cmd)
+   awful.util.spawn(cmd, {
+                       screen = mouse.screen
+   })
 end
 
 -- Returns true if all pairs in table1 are present in table2
