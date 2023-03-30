@@ -100,28 +100,7 @@ globalkeys =
             awful.screen.focus_relative(-1)
         end
     ),
-     awful.key(
-        {modkey, altkey, "Control"},
-        "1",
-        function()
-            awful.screen.focus(1)
-        end
-    ),
-     awful.key(
-        {modkey, altkey, "Control"},
-        "2",
-        function()
-            awful.screen.focus(2)
-        end
-    ),
-    awful.key(
-        {modkey, altkey, "Control"},
-        "3",
-        function()
-            awful.screen.focus(3)
-        end
-    ),
-    awful.key({modkey}, "u", awful.client.urgent.jumpto),
+   awful.key({modkey}, "u", awful.client.urgent.jumpto),
     --    awful.key({ modkey,           }, "Tab",
     --        function ()
     --            awful.client.focus.history.previous()
@@ -276,6 +255,21 @@ globalkeys =
 
 -- add run or raise key bindings
 globalkeys = awful.util.table.join(globalkeys, ror.genkeys(modkey))
+
+-- add keybindings to go to screen
+for i = 1, 9 do
+    globalkeys =
+        awful.util.table.join(
+            globalkeys,
+            awful.key(
+                {modkey, altkey, "Control"},
+                i,
+                function()
+                    awful.screen.focus(i)
+                end
+            )
+        )
+end
 
 -- add tag key bindings for 13 tags.
 local keys = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
