@@ -47,8 +47,8 @@ awful.rules.rules = {
     {
       rule = { class = "thunderbird" },
       properties = {
-        tag = "1",
-        screen = 2
+        tag = "5",
+        screen = 3
       }
     },
 
