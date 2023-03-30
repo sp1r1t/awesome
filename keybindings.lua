@@ -93,11 +93,32 @@ globalkeys =
             awful.screen.focus_relative(1)
         end
     ),
-    awful.key(
+     awful.key(
         {modkey, "Shift"},
         "p",
         function()
             awful.screen.focus_relative(-1)
+        end
+    ),
+     awful.key(
+        {modkey, altkey, "Control"},
+        "1",
+        function()
+            awful.screen.focus(1)
+        end
+    ),
+     awful.key(
+        {modkey, altkey, "Control"},
+        "2",
+        function()
+            awful.screen.focus(2)
+        end
+    ),
+    awful.key(
+        {modkey, altkey, "Control"},
+        "3",
+        function()
+            awful.screen.focus(3)
         end
     ),
     awful.key({modkey}, "u", awful.client.urgent.jumpto),

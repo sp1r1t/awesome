@@ -102,6 +102,7 @@ editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
 modkey = "Mod4"
+altkey = "Mod1"
 
 -- load layouts
 require("layouts")
