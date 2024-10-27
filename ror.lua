@@ -10,27 +10,26 @@
 -- Use xprop to get this info from a window.  WM_CLASS(STRING) gives you "instance", "class".
 -- WM_NAME(STRING) gives you the name of the selected window (usually something like the web page title
 -- for browsers, or the file name for emacs).
-
 table5 = {
-   ["Shift-b"] = {"xterm -title rtorrentTerm -e rtorrent", "rtorrentTerm", "name"},
-   ["c"] = {"code", "code-oss", "class"},
-   ["g"] = {"gimp-2.8", "gimp-2.8", "class"},
-   ["i"] = {"firefox", "firefox", "class"},
-   -- ["Control-j"]={"xterm -title jabber -e mcabber", "jabber", "name"},
+    ["Shift-b"] = {"xterm -title rtorrentTerm -e rtorrent", "rtorrentTerm", "name"},
+    ["c"] = {"code", "Code", "class"},
+    ["g"] = {"gimp-2.8", "gimp-2.8", "class"},
+    ["i"] = {"firefox", "firefox", "class"},
+    -- ["Control-j"]={"xterm -title jabber -e mcabber", "jabber", "name"},
 
-   ["o"] = {"emacsclient -c", "Emacs", "class"},
-   -- ["Shift-o"] = {"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
-   -- ["Control-o"] = {"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
-   ["t"] = {"gnome-terminal", "Gnome-terminal", "class"},
-   ["u"] = {"nautilus", "org.gnome.Nautilus", "class"},
-   ["y"] = {"evince", "Evince", "class"},
-   -- ["z"]={"evince", "Evince", "class"},
+    ["o"] = {"emacsclient -c", "Emacs", "class"},
+    -- ["Shift-o"] = {"xterm -title emacsTerm -e emacsclient -c -nw", "emacsTerm", "name"},
+    -- ["Control-o"] = {"sudo xterm -title emacsRootTerm -e emacs -nw", "emacsRootTerm", "name"},
+    ["t"] = {"gnome-terminal", "Gnome-terminal", "class"},
+    ["u"] = {"nautilus", "org.gnome.Nautilus", "class"},
+    ["y"] = {"evince", "Evince", "class"},
+    -- ["z"]={"evince", "Evince", "class"},
 
-   -- ["["]={"xterm -title irssi -e irssi", "irssi", "name"},
+    -- ["["]={"xterm -title irssi -e irssi", "irssi", "name"},
 
-   -- ['\\']={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
-   -- ["#"]={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
+    -- ['\\']={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
+    -- ["#"]={"sudo xterm -title rootTerm -class rootTerm", "rootTerm", "class"},
 
-   [","] = {"thunderbird", "thunderbird", "class"},
-   ["."] = {"thunderbird -compose", "Msgcompose", "class"} -- always opens a new one
+    [","] = {"thunderbird", "thunderbird", "class"},
+    ["."] = {"thunderbird -compose", "Msgcompose", "class"} -- always opens a new one
 }
