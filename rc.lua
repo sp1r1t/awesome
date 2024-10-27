@@ -580,11 +580,15 @@ require("keybindings")
 require("clientrules")
 
 -- {{{ Signals
-function manageclient(c, startup)
-    if not startup then
+function manageclient(c)
+    if c.startup_id then
         -- Set the windows at the slave,
         -- i.e. put it at the end of others instead of setting it master.
-        -- awful.client.movetoscreen(c, client.focus.screen)
+        --   naughty.notify({
+        --       text = tostring(c.startup_id),
+        --       timeout = 0
+        --   })
+        awful.client.movetoscreen(c, mouse.screen)
         awful.client.setslave(c)
         client.focus = c
 
