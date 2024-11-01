@@ -115,7 +115,7 @@ for s = 1, screen.count() do
         if screen[s].geometry.width >= screen[s].geometry.height then
             return awful.layout.suit.tile
         else
-            return awful.layout.suit.tile.bottom
+            return awful.layout.suit.tile.right
         end
     end
 
@@ -128,6 +128,9 @@ for s = 1, screen.count() do
             gap = 5,
             selected = t == 1 or false
         }
+        if screen[s].geometry.width < screen[s].geometry.height then
+            options.master_count = 0
+        end
 
         tags[s][t] = awful.tag.add(tagnames[t], options)
     end
